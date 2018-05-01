@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{%load static%}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb "Remover Professor" "delete_professor" %}
+{% endblock %}
+
+
+{%block content%}
+{% render_breadcrumbs %}
+<form method="post">
+    {%csrf_token%}
+
+<h2>Deseja realmente excluir {{professor.nome}} ?</h2>                
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    </div>
+</form>
+{% endblock %}
