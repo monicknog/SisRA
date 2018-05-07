@@ -12,6 +12,8 @@ class BolsistaForm(forms.ModelForm):
 		model = Bolsista
 		fields = ['nome','professor','tipo_bolsa','carga_horaria_semanal']
 
+
 class AcessoForm(forms.ModelForm):
-	model = Acesso
-	fields = ['bolsista', 'data_entrada', 'data_saida', 'total_horas']
+	class Meta:
+		model = Acesso
+		fields = ['bolsista']

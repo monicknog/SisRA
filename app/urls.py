@@ -17,7 +17,17 @@ urlpatterns = [
 	url(r'^bolsista/deletar_bolsista/(?P<pk>\d+)$', views.delete_bolsista, name='delete_bolsista'),
 	url(r'^bolsista/list_bolsista/$', views.list_bolsista, name='list_bolsista'),
 
-	url(r'^acesso/cad_acesso/(?P<pk>\d+)$', views.create_acesso, name='create_acesso'),
+
+	url(r'^acesso/cad_acesso/$', views.create_ac, name='create_ac'),
+	url(r'^acesso/cad_acess/(?P<pk>\d+)$', views.create_acesso, name='create_acesso'),
+	#url(r'^acesso/register_saida/(?P<pk>\d+)$', views.register_saida, name='register_saida'),
+	url(r'^acesso/register_hr/(?P<pk>\d+)$', views.register_tl, name='register_tl'),
+
+	url(r'^acesso/test_acesso/(?P<pk>\d+)$', views.test_acesso, name='test_acesso'),
+	
+#	url(r'^acesso/reg_entrada/(?P<pk>\d+)$', views.register_entrada, name='register_entrada'),
+	url(r'^acesso/list_acesso/$', views.list_acesso, name='list_acesso'),
+	
 	#url(r'^editar_movimentacao/$', views.update_movimentacao, name='update_movimentacao'),
     #url(r'^list_movimentacao/$', views.list_movimentacao, name='list_movimentacao'),
 	url(r'^professor/$', views.list_professor, name='list_professor'),
