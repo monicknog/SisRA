@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib import messages
 from .forms import ProfessorForm, BolsistaForm, AcessoForm
 from .models import Professor, Bolsista, Acesso
-from datetime import datetime, time, date
+from datetime import datetime, time, date, timedelta
 import datetime
 from django.utils import timezone
 
@@ -139,7 +139,8 @@ def test_acesso(request, pk):
 		if acesso is not None:
 
 			if acesso.hora_saida == None:
-				acesso.hora_saida = timezone.now()
+				acesso.hora_saida = timezone.localtime(timezone.now()).time()
+				acesso.total_horas = timedelta(hours = acesso.hora_saida.hour, minutes=acesso.hora_saida.minute, seconds=acesso.hora_saida.second) - timedelta(hours = acesso.hora_entrada.hour, minutes=acesso.hora_entrada.minute, seconds=acesso.hora_entrada.second)
 				acesso.save()
 				redirect('app:list_acesso')
 			else:

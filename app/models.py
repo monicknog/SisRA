@@ -41,7 +41,8 @@ class Acesso(models.Model):
 	data = models.DateField('Data Acesso', null=True, blank=True)
 	hora_entrada = models.TimeField('Entrada', null=True, blank=True)
 	hora_saida = models.TimeField('Saída', null = True, blank=True)
-	total_horas = models.IntegerField('Total', null = True, blank = True)
+	total_horas = models.DurationField('Total', null = True, blank = True)
+
 
 
 	class Meta:
