@@ -18,10 +18,10 @@
         <thead>
         <tr>
             <th>Bolsista</th>
-            <th>Entradar</th>
+            <th>Data</th>
+            <th>Entrada</th>
             <th>Saída</th>
             <th>Total de Horas</th>
-            <th>Saida</th>
             <th>Horas</th>
         </tr>
         </thead>
@@ -29,12 +29,13 @@
         {% for acesso in acessos %}
             <tr>
                 <td>{{ acesso.bolsista }}</td>
+                <td>{{acesso.data}}</td>
                 <td>{{ acesso.hora_entrada}}</td>
                 <td>{{ acesso.hora_saida }}</td>
                 <td>{{ acesso.total_horas}}</td>
 
                 <td><a href="{% url 'app:test_acesso' acesso.bolsista_id%}"><img alt="" src="{% static 'img/edit.png'%}"></a></td>
-                <td><a href="{% url 'app:register_tl' acesso.id%}"><img alt="" src="{% static 'img/edit.png'%}"></a></td>
+                <td><a href="{%url 'app:test_acesso' acesso.bolsista.id%}"><img alt="" src="{% static 'img/edit.png'%}"></a></td>
             </tr>
         {% endfor %}
         </tbody>

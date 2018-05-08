@@ -38,9 +38,10 @@ class Bolsista(models.Model):
 
 class Acesso(models.Model):
 	bolsista = models.ForeignKey(Bolsista, verbose_name='Bolsista', related_name='bolsista_acesso', on_delete=models.CASCADE)
+	data = models.DateField('Data Acesso', null=True, blank=True)
 	hora_entrada = models.TimeField('Entrada', null=True, blank=True)
 	hora_saida = models.TimeField('Saída', null = True, blank=True)
-	total_horas = models.TimeField('Total', null = True, blank = True)
+	total_horas = models.IntegerField('Total', null = True, blank = True)
 
 
 	class Meta:

@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib import messages
 from .forms import ProfessorForm, BolsistaForm, AcessoForm
 from .models import Professor, Bolsista, Acesso
-from datetime import datetime, time
+from datetime import datetime, time, date
 import datetime
 from django.utils import timezone
 
@@ -153,19 +153,18 @@ def list_acesso(request):
 	return render(request, 'acesso/list_acesso.html',{'acessos':acessos})
 
 def test_acesso(request, pk):
-	bolsista = get_object_or_404(Bolsista, pk=pk)
+	bolsista = Bolsista.objects.get(pk=pk)
 	acesso = Acesso.objects.latest('bolsista_id')
 	novo_acesso = Acesso()
 
 	if acesso.hora_saida == None:
-		acesso.hora_saida
 		acesso.hora_saida = timezone.now()
-		acesso.total_hora = acesso.hora_entrada
 		acesso.save()
 		redirect('app:list_acesso')
 	else:
 		novo_acesso.bolsista =  bolsista
-		novo_acesso.hora_entrada = timezone.localtime(timezone.now())
+		novo_acesso.data = date.today()
+		novo_acesso.hora_entrada = timezone.localtime(timezone.now()).time()
 		novo_acesso.save()
 		redirect('app:list_acesso')
 	acessos = Acesso.objects.all()
