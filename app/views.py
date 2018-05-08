@@ -124,28 +124,7 @@ def create_ac(request):
 	bolsistas = Bolsista.objects.all()
 	return render(request, 'acesso/cad_acesso.html',{'bolsistas':bolsistas})
 
-@login_required(login_url='/login')
-def create_acesso(request,pk):
-	bolsista = Bolsista.objects.get(pk=pk)
 
-	form = AcessoForm(request.POST or None)
-	if form.is_valid():
-		acesso = form.save(commit=False)
-		acesso.bolsista =  bolsista
-		acesso.hora_entrada = timezone.localtime(timezone.now())
-		acesso.save()
-		return redirect('app:list_acesso')
-	return render(request, 'acesso/cad_saida.html', {'form':form})
-
-def register_tl(request,pk):
-	ac = Acesso.objects.get(pk=pk)
-	form = AcessoForm(request.POST or None, instance =ac)
-	if form.is_valid():
-		acesso = form.save(commit=False)
-		acesso.total_hora = acesso.hora_saida - acesso.hora_entrada
-		acesso.save()
-		return redirect('app:list_acesso')
-	return render(request, 'acesso/cad_saida.html', {'form':form})
 
 @login_required(login_url='/login')
 def list_acesso(request):
@@ -153,19 +132,31 @@ def list_acesso(request):
 	return render(request, 'acesso/list_acesso.html',{'acessos':acessos})
 
 def test_acesso(request, pk):
-	bolsista = Bolsista.objects.get(pk=pk)
-	acesso = Acesso.objects.latest('bolsista_id')
-	novo_acesso = Acesso()
+	try:
 
-	if acesso.hora_saida == None:
-		acesso.hora_saida = timezone.now()
-		acesso.save()
-		redirect('app:list_acesso')
-	else:
-		novo_acesso.bolsista =  bolsista
-		novo_acesso.data = date.today()
-		novo_acesso.hora_entrada = timezone.localtime(timezone.now()).time()
-		novo_acesso.save()
+		bolsista = Bolsista.objects.get(pk=pk)
+		acesso = Acesso.objects.filter(bolsista=bolsista).order_by('-id').first()
+		if acesso is not None:
+
+			if acesso.hora_saida == None:
+				acesso.hora_saida = timezone.now()
+				acesso.save()
+				redirect('app:list_acesso')
+			else:
+				novo_acesso = Acesso()
+				novo_acesso.bolsista =  bolsista
+				novo_acesso.data = date.today()
+				novo_acesso.hora_entrada = timezone.localtime(timezone.now()).time()
+				novo_acesso.save()
+				redirect('app:list_acesso')	
+		else:
+			novo_acesso = Acesso()
+			novo_acesso.bolsista =  bolsista
+			novo_acesso.data = date.today()
+			novo_acesso.hora_entrada = timezone.localtime(timezone.now()).time()
+			novo_acesso.save()
+			redirect('app:list_acesso')	
+	except Bolsista.DoesNotExist:
 		redirect('app:list_acesso')
 	acessos = Acesso.objects.all()
 	return render(request, 'acesso/list_acesso.html', {'acessos':acessos})
