@@ -47,22 +47,29 @@
     <div class="container-fluid">
       <div class="row">
           <div class="col-x1-4 col-lg-4 col-md-4 col-sm-12">
-            <img class="card-img-top" src="{%static 'img/prof.png'%}" alt="Card image cap">
-            <div class="list-group">
+            <img class="card-img-top" src="{%static 'img/img_profe.png'%}" alt="Card image cap">
+            
+            <div class="list-group" style="padding-top: 5px; ">
+              <h4 style="text-align: center;">Professor</h4>
               <a href="{%url 'app:create_professor'%}" class="list-group-item list-group-item-action">Cadastrar</a>
               <a href="{%url 'app:list_professor'%}" class="list-group-item list-group-item-action">Listar</a>
           </div>
           </div>
           <div class="col-x1-4 col-lg-4 col-md-4 col-sm-12">
-            <img class="card-img-top" src="{%static 'img/bols.png'%}" alt="Card image cap">
-            <div class="list-group">
+            <img class="card-img-top" src="{%static 'img/img_bolsi.png'%}" alt="Card image cap">
+            
+            <div class="list-group" style="padding-top: 5px; ">
+              <h4 style="text-align: center;">Bolsista</h4>
               <a href="{%url 'app:create_bolsista'%}" class="list-group-item list-group-item-action">Cadastrar</a>
               <a href="{%url 'app:list_bolsista'%}" class="list-group-item list-group-item-action">Listar</a>
           </div>
           </div>
           <div class="col-x1-4 col-lg-4 col-md-4 col-sm-12">
-            <img class="card-img-top" src="{%static 'img/relat.png'%}" alt="Card image cap">
-            <div class="list-group">
+            <img class="card-img-top" src="{%static 'img/img_relat.png'%}" alt="Card image cap">
+
+
+            <div class="list-group" style="padding-top: 5px;">
+              <h4 style="text-align: center;">Relatorio</h4>
               <a href="{%url 'app:create_bolsista'%}" class="list-group-item list-group-item-action">Por Bolsista</a>
               <a href="{%url 'app:list_bolsista'%}" class="list-group-item list-group-item-action">Por Periodo</a>
               <a href="{%url 'app:list_acesso' %}" class="list-group-item list-group-item-action">Tudo</a>
