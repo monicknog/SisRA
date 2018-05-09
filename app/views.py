@@ -161,3 +161,16 @@ def test_acesso(request, pk):
 		redirect('app:list_acesso')
 	acessos = Acesso.objects.all()
 	return render(request, 'acesso/list_acesso.html', {'acessos':acessos})
+
+
+def acesso_bolsista(request, pk):
+	try:
+		bolsista = Bolsista.objects.get(pk=pk)
+		acessos = Acesso.objects.filter(bolsista=bolsista)
+	except Bolsista.DoesNotExist:
+		return redirect('app:home')
+	return render(request,'acesso/list_acesso.html',{'acessos':acessos})
+
+def ac(request):
+	bolsistas = Bolsista.objects.all()
+	return render(request, 'acesso/acesso_bolsista.html',{'bolsistas':bolsistas})

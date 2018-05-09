@@ -21,6 +21,8 @@ urlpatterns = [
 	
 	url(r'^acesso/cad_acesso/$', views.create_ac, name='create_ac'),	
 	url(r'^acesso/test_acesso/(?P<pk>\d+)$', views.test_acesso, name='test_acesso'),
+	url(r'^acesso/relatorio_bolsista/(?P<pk>\d+)$', views.acesso_bolsista, name='acesso_bolsista'),
+	url(r'^acesso/acesso_bolsista/$', views.ac, name='ac'),	
 	
 #	url(r'^acesso/reg_entrada/(?P<pk>\d+)$', views.register_entrada, name='register_entrada'),
 	url(r'^acesso/list_acesso/$', views.list_acesso, name='list_acesso'),
