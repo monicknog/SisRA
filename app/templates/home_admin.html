@@ -63,10 +63,9 @@
           <div class="col-x1-4 col-lg-4 col-md-4 col-sm-12">
             <img class="card-img-top" src="{%static 'img/relatorio_z.png'%}" alt="Card image cap">
             <div class="list-group">
-              <button type="button" class="list-group-item list-group-item-action">
-                Todas as Movimentações
-              </button>
-              <button type="button" class="list-group-item list-group-item-action">Por Periodo</button>
+              <a href="{%url 'app:create_bolsista'%}" class="list-group-item list-group-item-action">Por Bolsista</a>
+              <a href="{%url 'app:list_bolsista'%}" class="list-group-item list-group-item-action">Por Periodo</a>
+              <a href="{%url 'app:list_acesso' %}" class="list-group-item list-group-item-action">Tudo</a>
             </div>
           </div>      
       </div>
