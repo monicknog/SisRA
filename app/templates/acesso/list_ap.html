@@ -22,7 +22,6 @@
             <th>Entrada</th>
             <th>Saída</th>
             <th>Permanência</th>
-            <th>Registrar Acesso</th>
         </tr>
         </thead>
         <tbody>
@@ -33,7 +32,6 @@
                 <td>{{ acesso.hora_entrada}}</td>
                 <td>{{ acesso.hora_saida }}</td>
                 <td>{{ acesso.total_horas}}</td>
-                <td><a href="{% url 'app:test_acesso' acesso.bolsista_id%}"><img alt="" src="{% static 'img/time.png'%}" width="15"></a></td>
             </tr>
         {% endfor %}
         </tbody>

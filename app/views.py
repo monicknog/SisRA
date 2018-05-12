@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -9,6 +9,31 @@ from .models import Professor, Bolsista, Acesso
 from datetime import datetime, time, date, timedelta
 import datetime
 from django.utils import timezone
+from django.template.loader import get_template
+from django.urls import resolve
+from django.http import HttpResponse
+from django.views.generic import View
+from app.utils import render_to_pdf #created in step 4
+
+class GeneratePdf(View):
+    def get(self, request, *args, **kwargs):
+        acessos = Acesso.objects.all()
+        data = {
+        	'acessos': acessos,
+        }
+        pdf = render_to_pdf('pdf/invoice.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+
+class GeneratePdft(View):
+    def get(self, request, pk, **kwargs):
+        bolsista = Bolsista.objects.get(pk=pk)
+        acessos = Acesso.objects.filter(bolsista=bolsista)
+        data = {
+        	'acessos': acessos,
+        }
+        pdf = render_to_pdf('pdf/invoice.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
 
 #Login e Home
 def logar(request):
@@ -169,8 +194,25 @@ def acesso_bolsista(request, pk):
 		acessos = Acesso.objects.filter(bolsista=bolsista)
 	except Bolsista.DoesNotExist:
 		return redirect('app:home')
-	return render(request,'acesso/list_acesso.html',{'acessos':acessos})
+	return render(request,'acesso/list_bolsista.html',{'acessos':acessos})
 
 def ac(request):
 	bolsistas = Bolsista.objects.all()
 	return render(request, 'acesso/acesso_bolsista.html',{'bolsistas':bolsistas})
+
+def act(request):
+	bolsistas = Bolsista.objects.all()
+	return render(request, 'acesso/acesso_bolsistat.html',{'bolsistas':bolsistas})
+
+
+def ap(request):
+	if request.method == 'POST':
+		if request.POST['data_'] == '':
+			return redirect ('app:list_acesso')
+		else:
+			return redirect(reverse('app:list', args=(request.POST['data_'], request.POST['data_f'])))
+	return render(request, 'acesso/acesso_periodo.html',{})
+
+def list(request, data_ini, data_fim):
+	acessos = Acesso.objects.filter(data__range=(data_ini, data_fim))
+	return render(request,'acesso/list_ap.html',{'acessos':acessos})

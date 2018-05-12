@@ -13,6 +13,10 @@ class Professor(models.Model):
 		verbose_name='Professor';
 		verbose_name_plural='Professores'
 
+	def save(self, force_insert=False, force_update=False):
+		self.nome = self.nome.upper()
+		super(Professor, self).save(force_insert, force_update)
+
 class Bolsista(models.Model):
 	
 	TIPO_CHOICES = (
@@ -22,6 +26,7 @@ class Bolsista(models.Model):
 
 
 	nome = models.CharField('Nome', max_length=100)
+	matricula = models.CharField('Matricula', max_length=20,unique=True)
 	cartao_rfid = models.CharField('Cartão RFID', max_length=100, null=True)
 	professor = models.ForeignKey(Professor, verbose_name='Professor', related_name='bolsista_professor', on_delete=models.CASCADE, default=True)
 	tipo_bolsa = models.IntegerField('Tipo', choices=TIPO_CHOICES)
@@ -35,6 +40,10 @@ class Bolsista(models.Model):
 	class Meta:
 		verbose_name='Bolsista'
 		verbose_name_plural='Bolsistas'
+
+	def save(self, force_insert=False, force_update=False):
+		self.nome = self.nome.upper()
+		super(Bolsista, self).save(force_insert, force_update)
 
 class Acesso(models.Model):
 	bolsista = models.ForeignKey(Bolsista, verbose_name='Bolsista', related_name='bolsista_acesso', on_delete=models.CASCADE)

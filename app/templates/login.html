@@ -18,11 +18,11 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
   </head>
 
-  <body>
+  <body style="background: #373435;"">
     <form class="form-signin" method="post">
 
       <div class="text-center mb-4">
-        <img class="mb-4" src="{%static 'img/LEDS.png'%}" alt="" width="150">
+        <img class="mb-4" src="{%static 'img/LEDS.png'%}" alt="" width="250">
         
       </div>
     {%csrf_token%}
@@ -35,7 +35,7 @@
     {% for field in form %}
     <div class="form-group">
       <div class="log">
-        <label>{{ field.label_tag }}</label>
+        <label style="color: white;">{{ field.label_tag }}</label>
         </div>
         <div class="log">
         {{field}}
