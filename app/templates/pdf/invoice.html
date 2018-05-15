@@ -39,32 +39,30 @@
      <body>
          <div class='wrapper'>
              <div class='header'>
-                 <p class='title'>Relatorio por Bolsista</p>
+                 <p class='title'>RELATÓRIO {{bolsista.nome}}</p>
              </div>
          <div>
         <table class="table">
         <thead>
         <tr>
-            <th>Bolsista</th>
             <th>Data</th>
             <th>Entrada</th>
             <th>Saída</th>
             <th>Permanência</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody style="text-align: center;">
         {% for acesso in acessos %}
             <tr>
-                <td>{{ acesso.bolsista }}</td>
                 <td>{{acesso.data}}</td>
                 <td>{{ acesso.hora_entrada}}</td>
                 <td>{{ acesso.hora_saida }}</td>
                 <td>{{ acesso.total_horas}}</td>
             </tr>
-            
         {% endfor %}
         </tbody>
     </table>
+    <h2 style="text-align: right;">Total {{ th.total }}</h2>
      </div>
      </body>
  </html>

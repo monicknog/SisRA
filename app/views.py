@@ -12,6 +12,7 @@ from django.utils import timezone
 from django.template.loader import get_template
 from django.urls import resolve
 from django.http import HttpResponse
+from django.db.models import Sum
 from django.views.generic import View
 from app.utils import render_to_pdf #created in step 4
 
@@ -20,6 +21,7 @@ class GeneratePdf(View):
         acessos = Acesso.objects.all()
         data = {
         	'acessos': acessos,
+
         }
         pdf = render_to_pdf('pdf/invoice.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
@@ -28,9 +30,13 @@ class GeneratePdf(View):
 class GeneratePdft(View):
     def get(self, request, pk, **kwargs):
         bolsista = Bolsista.objects.get(pk=pk)
-        acessos = Acesso.objects.filter(bolsista=bolsista)
+        acessos = Acesso.objects.filter(bolsista=bolsista).exclude(hora_saida=None)
+        th = acessos.aggregate(total=Sum('total_horas'))
+
         data = {
+        	'bolsista': bolsista,
         	'acessos': acessos,
+        	'th': th,
         }
         pdf = render_to_pdf('pdf/invoice.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
