@@ -24,8 +24,9 @@ class GeneratePdf(View):
 
         }
         pdf = render_to_pdf('pdf/invoice.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
-
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+        return response
 
 class GeneratePdft(View):
     def get(self, request, pk, **kwargs):
@@ -39,7 +40,9 @@ class GeneratePdft(View):
         	'th': th,
         }
         pdf = render_to_pdf('pdf/invoice.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename=Relatório %s.pdf'%(bolsista.nome)
+        return response
 
 #Login e Home
 def logar(request):
