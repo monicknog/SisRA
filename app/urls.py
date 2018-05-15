@@ -11,8 +11,9 @@ urlpatterns = [
 	url(r'^login/$', views.logar, name='logar'),
 	url(r'^sair/$', auth_views.logout,{'next_page': 'app:logar'}, name='sair'),	
 	
-	url(r'^teste/$', views.GeneratePdf.as_view(), name='GeneratePdf'),
+	#url(r'^teste/$', views.GeneratePdf.as_view(), name='GeneratePdf'),
 	url(r'^acesso/relatorio_bolsista/(?P<pk>\d+)$', views.GeneratePdft.as_view(), name='GeneratePdft'),
+	url(r'^acesso/relatorio_periodo/(?P<data_ini>[\w.@+-]+)/(?P<data_fim>[\w.@+-]+)/$', views.RelatorioPeriodo.as_view(), name='RelatorioPeriodo'),
 
 	url(r'^bolsista/$', views.list_bolsista, name='list_bolsista'),
     url(r'^bolsista/cad_bolsista/$', views.create_bolsista, name='create_bolsista'),	

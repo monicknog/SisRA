@@ -27,23 +27,6 @@ class GeneratePdf(View):
         response = HttpResponse(pdf, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="report.pdf"'
         return response
-
-class GeneratePdft(View):
-    def get(self, request, pk, **kwargs):
-        bolsista = Bolsista.objects.get(pk=pk)
-        acessos = Acesso.objects.filter(bolsista=bolsista).exclude(hora_saida=None)
-        th = acessos.aggregate(total=Sum('total_horas'))
-
-        data = {
-        	'bolsista': bolsista,
-        	'acessos': acessos,
-        	'th': th,
-        }
-        pdf = render_to_pdf('pdf/invoice.html', data)
-        response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename=Relatório %s.pdf'%(bolsista.nome)
-        return response
-
 #Login e Home
 def logar(request):
 	if request.method == 'POST':
@@ -214,14 +197,57 @@ def act(request):
 	return render(request, 'acesso/acesso_bolsistat.html',{'bolsistas':bolsistas})
 
 
+#def ap(request):
+#	if request.method == 'POST':
+#		if request.POST['data_'] == '':
+#			return redirect ('app:list_acesso')
+#		else:
+#			return redirect(reverse('app:list', args=(request.POST['data_'], request.POST['data_f'])))
+#	return render(request, 'acesso/acesso_periodo.html',{})
+
 def ap(request):
 	if request.method == 'POST':
 		if request.POST['data_'] == '':
 			return redirect ('app:list_acesso')
 		else:
-			return redirect(reverse('app:list', args=(request.POST['data_'], request.POST['data_f'])))
+			return redirect(reverse('app:RelatorioPeriodo', args=(request.POST['data_'], request.POST['data_f'])))
 	return render(request, 'acesso/acesso_periodo.html',{})
 
 def list(request, data_ini, data_fim):
 	acessos = Acesso.objects.filter(data__range=(data_ini, data_fim))
 	return render(request,'acesso/list_ap.html',{'acessos':acessos})
+
+
+class GeneratePdft(View):
+    def get(self, request, pk, **kwargs):
+        bolsista = Bolsista.objects.get(pk=pk)
+        acessos = Acesso.objects.filter(bolsista=bolsista).exclude(hora_saida=None)
+        th = acessos.aggregate(total=Sum('total_horas'))
+
+        data = {
+        	'bolsista': bolsista,
+        	'acessos': acessos,
+        	'th': th,
+        }
+        pdf = render_to_pdf('pdf/invoice.html', data)
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename=Relatório %s.pdf'%(bolsista.nome)
+        return response
+
+class RelatorioPeriodo(View):
+	def get(self, request, data_ini, data_fim):
+		acessos = Acesso.objects.filter(data__range=(data_ini,data_fim))
+		th = acessos.aggregate(total=Sum('total_horas'))
+		d1 = datetime.datetime.strptime(data_ini, "%Y-%m-%d").date()
+		d2 = datetime.datetime.strptime(data_fim, "%Y-%m-%d").date()
+		data = {
+			'acessos':acessos,
+			'th':th,
+			'data_inicio':d1.strftime("%d/%m/%Y"),
+			'data_fim':d2.strftime("%d/%m/%Y"),
+		}
+		pdf = render_to_pdf('pdf/relatorio_periodo.html',data)
+		response = HttpResponse(pdf,content_type='application/pdf')
+		response['Content-Disposition'] = 'attachment; filename=RelatorioPeriodo.pdf'
+		return response
+

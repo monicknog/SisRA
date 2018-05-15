@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
  <html>
      <head>
-         <title>Title</title>
+         <title>Relatório</title>
          <style type="text/css">
              body {
                  font-weight: 200;
@@ -20,7 +20,9 @@
                 padding: 10px 20px 0px 20px;  
              }
              .title span {
+                font-size: 18px;
                  color: #007cae;
+                 padding-bottom: 10px;
              }
              .details {
                  padding: 10px 20px 0px 20px;
@@ -33,6 +35,16 @@
                  /* Set the hr color */
                  color: #333; /* old IE */
                  background-color: #fff; /* Modern Browsers */
+             }
+             th{
+                text-align: center;
+             }
+             tbody{
+                text-align: center;
+             }
+             h2{
+                text-align: right;
+                padding-right: 45px;
              }
          </style>
      </head>
@@ -51,7 +63,7 @@
             <th>Permanência</th>
         </tr>
         </thead>
-        <tbody style="text-align: center;">
+        <tbody>
         {% for acesso in acessos %}
             <tr>
                 <td>{{acesso.data}}</td>
@@ -62,7 +74,7 @@
         {% endfor %}
         </tbody>
     </table>
-    <h2 style="text-align: right;">Total {{ th.total }}</h2>
+    <h2>Total {{ th.total }}</h2>
      </div>
      </body>
  </html>

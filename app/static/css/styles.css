@@ -8,6 +8,11 @@ body {
   height: 100%;
 }
 
+.list-group{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 body {
   display: -ms-flexbox;
   display: flex;

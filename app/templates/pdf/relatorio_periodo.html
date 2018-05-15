@@ -20,7 +20,9 @@
                 padding: 10px 20px 0px 20px;  
              }
              .title span {
+                font-size: 18px;
                  color: #007cae;
+                 padding-bottom: 10px;
              }
              .details {
                  padding: 10px 20px 0px 20px;
@@ -34,22 +36,48 @@
                  color: #333; /* old IE */
                  background-color: #fff; /* Modern Browsers */
              }
+             th{
+                text-align: center;
+             }
+             tbody{
+                text-align: center;
+             }
+             h2{
+                text-align: right;
+                padding-right: 45px;
+             }
          </style>
      </head>
      <body>
          <div class='wrapper'>
              <div class='header'>
-                 <p class='title'>Invoice # </p>
+                 <p class='title'>RELATÓRIO POR PERIODO</p>
+                 <span>{{data_inicio}} À {{data_fim}}</span>
              </div>
          <div>
-         <div class='details'>
-             Bill to: {{today}} <br/>
-             Amount:  <br/>
-             Date: 
-             <hr class='hrItem' />
-             
-         </div>
-
+        <table class="table">
+        <thead>
+        <tr>
+            <th>Bolsista</th>
+            <th>Data</th>
+            <th>Entrada</th>
+            <th>Saída</th>
+            <th>Permanência</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for acesso in acessos %}
+            <tr>
+                <td>{{acesso.bolsista}}</td>
+                <td>{{acesso.data}}</td>
+                <td>{{ acesso.hora_entrada}}</td>
+                <td>{{ acesso.hora_saida }}</td>
+                <td>{{ acesso.total_horas}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h2>Total {{ th.total }}</h2>
      </div>
      </body>
  </html>
