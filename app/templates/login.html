@@ -26,7 +26,7 @@
       </div>
     {%csrf_token%}
     {% for error in form.non_field_errors %}
-    <div class="form-group has-errors text-warning large"  >
+    <div class="form-group has-errors text-warning large" >
         {{error}}
     </div>
     {%endfor%}
