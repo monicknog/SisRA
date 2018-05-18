@@ -42,18 +42,21 @@
              tbody{
                 text-align: center;
              }
-             h2{
+             .total{
                 text-align: right;
                 padding-right: 45px;
              }
+
          </style>
      </head>
      <body>
          <div class='wrapper'>
+        {%if acessos.exists%}
              <div class='header'>
                  <p class='title'>RELATÓRIO {{bolsista.nome}}</p>
              </div>
          <div>
+        
         <table class="table">
         <thead>
         <tr>
@@ -74,7 +77,12 @@
         {% endfor %}
         </tbody>
     </table>
-    <h2>Total {{ th.total }}</h2>
+    <h2 class="total">Total {{ th.total }}</h2>
+    {%else%}
+    <div class="" style="text-align: center;">
+                 <h2>NÃO HÁ REGISTROS PARA {{bolsista.nome}}</h2>
+    </div>    
+    {%endif%}
      </div>
      </body>
  </html>

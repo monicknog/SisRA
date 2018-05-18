@@ -33,21 +33,7 @@
     </div>
     {% endfor %}
 
-    <button type="submit" class="btn btn-success">Salvar</button>
+    <button type="submit" class="btn btn-primary">Salvar</button>
     </div>
 </form>
 {% endblock %}
-{%block javascript%}
-
-<script>
-    jQuery(':input').keyup(function(){
-   $(this).val($(this).val().toUpperCase());
-});
-$('.form').submit(function () {
-    var dados = jQuery(this).serializeArray();
-    var obj = dados;
-    alert(JSON.stringify(obj));
-});
-
-</script>
-{%endblock%}

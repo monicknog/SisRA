@@ -217,17 +217,19 @@ def act(request):
 #	return render(request, 'acesso/acesso_periodo.html',{})
 
 def ap(request):
+	data = str(date.today())
 	if request.method == 'POST':
 		pk = request.POST.get('select_bolsista')
 		return redirect(reverse('app:RelatorioPeriodoB', args=(request.POST['data_'],request.POST['data_f'],request.POST['select_bolsista'])))
 	bolsistas = Bolsista.objects.all()
-	return render(request, 'acesso/relatorio.html',{'bolsistas':bolsistas})
+	return render(request, 'acesso/relatorio.html',{'bolsistas':bolsistas, 'data':data,})
 
 def apb(request):
 	if request.method == 'POST':
 		pk = request.POST.get('select_bolsista')
 		return redirect(reverse('app:RelatorioPeriodoB', args=(request.POST['data_'],request.POST['data_f'],request.POST['select_bolsista'])))
 	bolsistas = Bolsista.objects.all()
+
 	return render(request, 'acesso/relatorio.html',{'bolsistas':bolsistas})
 
 
@@ -235,19 +237,23 @@ class RelatorioPeriodoB(View):
 	def get(self, request, data_ini, data_fim, pk):
 		if not pk == '0':
 			bolsista = Bolsista.objects.get(pk=pk)
-			acessos = Acesso.objects.filter(data__range=(data_ini,data_fim), bolsista = bolsista)
+			acessos = Acesso.objects.filter(data__range=(data_ini,data_fim), bolsista = bolsista).exclude(hora_saida=None)
 			titulo = '%s' %(bolsista.nome)
 
 		else:
 			bolsista = Bolsista.objects.all()
-			acessos = Acesso.objects.filter(data__range=(data_ini,data_fim))
+			acessos = Acesso.objects.filter(data__range=(data_ini,data_fim)).exclude(hora_saida=None)
 			titulo = 'TODOS BOLSISTAS'
 
 #		bolsistas = Bolsista.objects.get(pk=pk)
 
 #		acessos = Acesso.objects.filter(data__range=(data_ini,data_fim))
 
-		th = acessos.aggregate(total=Sum('total_horas'))
+		if acessos.exists():
+			th = acessos.aggregate(total=Sum('total_horas'))
+		else:
+			th='--'
+#		th = acessos.aggregate(total=Sum('total_horas'))
 		d1 = datetime.datetime.strptime(data_ini, "%Y-%m-%d").date()
 		d2 = datetime.datetime.strptime(data_fim, "%Y-%m-%d").date()
 		data = {
@@ -273,8 +279,10 @@ class RelatorioBolsista(View):
     def get(self, request, pk, **kwargs):
         bolsista = Bolsista.objects.get(pk=pk)
         acessos = Acesso.objects.filter(bolsista=bolsista).exclude(hora_saida=None)
-        th = acessos.aggregate(total=Sum('total_horas'))
-
+        if acessos.exists():
+        	th = acessos.aggregate(total=Sum('total_horas'))
+        else:
+        	th='--'
         data = {
         	'bolsista': bolsista,
         	'acessos': acessos,
@@ -288,7 +296,12 @@ class RelatorioBolsista(View):
 class RelatorioPeriodo(View):
 	def get(self, request, data_ini, data_fim):
 		acessos = Acesso.objects.filter(data__range=(data_ini,data_fim))
-		th = acessos.aggregate(total=Sum('total_horas'))
+
+		#th = acessos.aggregate(total=Sum('total_horas'))
+		if acessos.exists():
+			th = acessos.aggregate(total=Sum('total_horas'))
+		else:
+			th='--'
 		d1 = datetime.datetime.strptime(data_ini, "%Y-%m-%d").date()
 		d2 = datetime.datetime.strptime(data_fim, "%Y-%m-%d").date()
 		data = {
