@@ -1,4 +1,3 @@
-
 <!doctype html>
 {%load static%}
 <html lang="en">
@@ -27,7 +26,7 @@
       </div>
     {%csrf_token%}
     {% for error in form.non_field_errors %}
-    <div class="form-group has-errors text-danger small">
+    <div class="form-group has-errors text-warning large"  >
         {{error}}
     </div>
     {%endfor%}
@@ -49,5 +48,10 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
       
     </form>
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
   </body>
 </html>

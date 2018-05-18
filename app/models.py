@@ -10,8 +10,8 @@ class Professor(models.Model):
 		return self.nome
 
 	class Meta:
-		verbose_name='Professor';
-		verbose_name_plural='Professores'
+		verbose_name='Orientador';
+		verbose_name_plural='Orientadores'
 
 	def save(self, force_insert=False, force_update=False):
 		self.nome = self.nome.upper()
@@ -28,7 +28,7 @@ class Bolsista(models.Model):
 	nome = models.CharField('Nome', max_length=100)
 	matricula = models.CharField('Matricula', max_length=20,unique=True)
 	cartao_rfid = models.CharField('Cartão RFID', max_length=100, null=True)
-	professor = models.ForeignKey(Professor, verbose_name='Professor', related_name='bolsista_professor', on_delete=models.CASCADE, default=True)
+	professor = models.ForeignKey(Professor, verbose_name='Orientador', related_name='bolsista_professor', on_delete=models.CASCADE, default=True)
 	tipo_bolsa = models.IntegerField('Tipo', choices=TIPO_CHOICES)
 	carga_horaria_semanal = models.IntegerField('Carga Horaria (semanal)', validators=[MinValueValidator(1)])
 	

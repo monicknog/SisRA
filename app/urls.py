@@ -8,12 +8,17 @@ urlpatterns = [
 
 
 	url(r'^$', views.home, name='home'),
+	url(r'^relatorio/$', views.relatorio_op, name='relatorio_op'),
 	url(r'^login/$', views.logar, name='logar'),
 	url(r'^sair/$', auth_views.logout,{'next_page': 'app:logar'}, name='sair'),	
 	
 	#url(r'^teste/$', views.GeneratePdf.as_view(), name='GeneratePdf'),
-	url(r'^acesso/relatorio_bolsista/(?P<pk>\d+)$', views.GeneratePdft.as_view(), name='GeneratePdft'),
+	
+	url(r'^acesso/relatorio_periodoB/(?P<data_ini>[\w.@+-]+)/(?P<data_fim>[\w.@+-]+)/(?P<pk>\d+)/$', views.RelatorioPeriodoB.as_view(), name='RelatorioPeriodoB'),
+
+	url(r'^acesso/relatorio_bolsista/(?P<pk>\d+)$', views.RelatorioBolsista.as_view(), name='RelatorioBolsista'),
 	url(r'^acesso/relatorio_periodo/(?P<data_ini>[\w.@+-]+)/(?P<data_fim>[\w.@+-]+)/$', views.RelatorioPeriodo.as_view(), name='RelatorioPeriodo'),
+
 
 	url(r'^bolsista/$', views.list_bolsista, name='list_bolsista'),
     url(r'^bolsista/cad_bolsista/$', views.create_bolsista, name='create_bolsista'),	
@@ -21,7 +26,7 @@ urlpatterns = [
 	url(r'^bolsista/deletar_bolsista/(?P<pk>\d+)$', views.delete_bolsista, name='delete_bolsista'),
 	url(r'^bolsista/list_bolsista/$', views.list_bolsista, name='list_bolsista'),
 
-	
+	url(r'^acessos/$', views.apb, name='apb'),
 	url(r'^acesso/cad_acesso/$', views.create_ac, name='create_ac'),	
 	url(r'^acesso/test_acesso/(?P<pk>\d+)$', views.test_acesso, name='test_acesso'),
 	url(r'^acesso/relatorio_bolsista/(?P<pk>\d+)$', views.acesso_bolsista, name='acesso_bolsista'),

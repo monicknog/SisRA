@@ -38,6 +38,9 @@ def logar(request):
 			return render(request,"login.html",{"form":form})
 	return render(request, "login.html", {"form":AuthenticationForm()})
 
+def relatorio_op(request):
+	return render(request, 'acesso/relatorio_op.html')
+
 
 @login_required(login_url='/login')
 def home(request):
@@ -205,20 +208,68 @@ def act(request):
 #			return redirect(reverse('app:list', args=(request.POST['data_'], request.POST['data_f'])))
 #	return render(request, 'acesso/acesso_periodo.html',{})
 
+##def ap(request):
+#	if request.method == 'POST':
+#		if request.POST['data_'] == '':
+#			return redirect ('app:list_acesso')
+#		else:
+#			return redirect(reverse('app:RelatorioPeriodo', args=(request.POST['data_'], request.POST['data_f'])))
+#	return render(request, 'acesso/acesso_periodo.html',{})
+
 def ap(request):
 	if request.method == 'POST':
-		if request.POST['data_'] == '':
-			return redirect ('app:list_acesso')
+		pk = request.POST.get('select_bolsista')
+		return redirect(reverse('app:RelatorioPeriodoB', args=(request.POST['data_'],request.POST['data_f'],request.POST['select_bolsista'])))
+	bolsistas = Bolsista.objects.all()
+	return render(request, 'acesso/relatorio.html',{'bolsistas':bolsistas})
+
+def apb(request):
+	if request.method == 'POST':
+		pk = request.POST.get('select_bolsista')
+		return redirect(reverse('app:RelatorioPeriodoB', args=(request.POST['data_'],request.POST['data_f'],request.POST['select_bolsista'])))
+	bolsistas = Bolsista.objects.all()
+	return render(request, 'acesso/relatorio.html',{'bolsistas':bolsistas})
+
+
+class RelatorioPeriodoB(View):
+	def get(self, request, data_ini, data_fim, pk):
+		if not pk == '0':
+			bolsista = Bolsista.objects.get(pk=pk)
+			acessos = Acesso.objects.filter(data__range=(data_ini,data_fim), bolsista = bolsista)
+			titulo = '%s' %(bolsista.nome)
+
 		else:
-			return redirect(reverse('app:RelatorioPeriodo', args=(request.POST['data_'], request.POST['data_f'])))
-	return render(request, 'acesso/acesso_periodo.html',{})
+			bolsista = Bolsista.objects.all()
+			acessos = Acesso.objects.filter(data__range=(data_ini,data_fim))
+			titulo = 'TODOS BOLSISTAS'
+
+#		bolsistas = Bolsista.objects.get(pk=pk)
+
+#		acessos = Acesso.objects.filter(data__range=(data_ini,data_fim))
+		
+		th = acessos.aggregate(total=Sum('total_horas'))
+		d1 = datetime.datetime.strptime(data_ini, "%Y-%m-%d").date()
+		d2 = datetime.datetime.strptime(data_fim, "%Y-%m-%d").date()
+		data = {
+			'acessos':acessos,
+			'th':th,
+			'bolsistas':bolsista,
+			'data_inicio':d1.strftime("%d/%m/%Y"),
+			'data_fim':d2.strftime("%d/%m/%Y"),
+			'titulo': titulo,
+		}
+		pdf = render_to_pdf('pdf/relatorio_periodo.html',data)
+		response = HttpResponse(pdf,content_type='application/pdf')
+		response['Content-Disposition'] = 'attachment; filename=RelatorioPeriodoBolsista.pdf'
+		return response
+
 
 def list(request, data_ini, data_fim):
 	acessos = Acesso.objects.filter(data__range=(data_ini, data_fim))
 	return render(request,'acesso/list_ap.html',{'acessos':acessos})
 
 
-class GeneratePdft(View):
+class RelatorioBolsista(View):
     def get(self, request, pk, **kwargs):
         bolsista = Bolsista.objects.get(pk=pk)
         acessos = Acesso.objects.filter(bolsista=bolsista).exclude(hora_saida=None)

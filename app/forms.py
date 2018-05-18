@@ -10,7 +10,7 @@ class ProfessorForm(forms.ModelForm):
 class BolsistaForm(forms.ModelForm):
 	class Meta:
 		model = Bolsista
-		fields = ['nome','matricula','professor','tipo_bolsa','carga_horaria_semanal']
+		fields = ['nome','matricula','cartao_rfid','professor','tipo_bolsa','carga_horaria_semanal']
 
 
 class AcessoForm(forms.ModelForm):

@@ -5,14 +5,14 @@
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb "Lista de Professores" "list_professor" %}
+    {% breadcrumb "Lista de Orientadores" "list_professor" %}
 {% endblock %}
 
 
 {%block content%}
 {% render_breadcrumbs %}
 
-    <legend>Professores</legend>
+    <legend>Orientadores</legend>
     <a href="{%url 'app:create_professor'%}"><button class="btn btn-primary">Cadastrar Professor
 </button></a>
     <table class="table">

@@ -5,7 +5,7 @@
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb "Professor" "cad_professor" %}
+    {% breadcrumb "Orientador" "cad_professor" %}
 {% endblock %}
 
 
@@ -24,7 +24,7 @@
             <div class="col-md-1 col-sm-1">
               {{ field.label_tag }}  
             </div>
-            <div class="col-md-1 col-sm-1">
+            <div class="col-md-1 col-sm-1" style="text-transform: uppercase;">
                 {{ field }}
             </div>  
             {{ field.errors }}
@@ -33,7 +33,7 @@
     </div>
     {% endfor %}
                 
-    <button type="submit" class="btn btn-primary">Salvarr</button>
+    <button type="submit" class="btn btn-primary">Salvar</button>
     </div>
 </form>
 {% endblock %}
