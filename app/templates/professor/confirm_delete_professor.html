@@ -14,9 +14,9 @@
 <form method="post">
     {%csrf_token%}
 
-<h2>Deseja realmente excluir {{professor.nome}} ?</h2>                
-    <button type="submit" class="btn btn-danger">Excluir</button>
-    <a href="{%url 'app:list_professor'%}"><button class="btn btn-primary">Cancelar
+<h2>Deseja realmente excluir {{professor.nome}} ?</h2>
+    <button type="submit" class="btn btn-success">Confirmarr</button>
+    <a href="{%url 'app:list_professor'%}"><button class="btn btn-danger">Cancelar
 </button></a>
     </div>
 </form>

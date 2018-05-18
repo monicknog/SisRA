@@ -22,18 +22,32 @@
      <div class="form-group">
         <div class="row">
             <div class="col-md-1 col-sm-1">
-              {{ field.label_tag }}  
+              {{ field.label_tag }}
             </div>
-            <div class="col-md-1 col-sm-1" style="text-transform: uppercase;">
+            <div class="col-md-2 col-sm-2" style="text-transform: uppercase;">
                 {{ field }}
-            </div>  
-            {{ field.errors }}
-        </div>      
-        
+            </div>
+        </div>
+        {{ field.errors }}
+
     </div>
     {% endfor %}
-                
-    <button type="submit" class="btn btn-primary">Salvar</button>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
     </div>
 </form>
 {% endblock %}
+{%block javascript%}
+
+<script>
+    jQuery(':input').keyup(function(){
+   $(this).val($(this).val().toUpperCase());
+});
+$('.form').submit(function () {
+    var dados = jQuery(this).serializeArray();
+    var obj = dados;
+    alert(JSON.stringify(obj));
+});
+
+</script>
+{%endblock%}

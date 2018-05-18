@@ -19,20 +19,20 @@
         {{error}}
     </div>
     {%endfor%}
-    
+
      <div class="form-inline">
      <label class="mr-sm-2" for="inlineFormCustomSelect">Selecione o Bolsista</label>
     <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect" id="select_bolsista" name="select_bolsista">
-    <option selected value="0">Todos</option>
+    <option selected value="0">TODOS</option>
     {%for bolsista in bolsistas%}
     <option value="{{bolsista.id}}">{{bolsista.nome}}</option>
     {%endfor%}
     <label class="sr-only" for="inlineFormInput">De</label>
-    <input type="date" class="form-control mb-2 mr-sm-2 mb-sm-0" id="data_" name="data_">
+    <input type="date" class="form-control mb-2 mr-sm-2 mb-sm-0" id="data_" name="data_" >
     <label class="sr-only" for="inlineFormInput">Até</label>
     <input type="date" class="form-control mb-2 mr-sm-2 mb-sm-0" id="data_f" name="data_f">
     <button type="submit" class="btn btn-primary">Gerar Relatório</button>
-    </div>      
+    </div>
     </div>
 </form>
 <!--<legend>Relatorio por Bolsista</legend>
@@ -54,3 +54,7 @@
     </table>
 -->
 {% endblock %}
+{%block javascript%}
+
+
+{%endblock%}

@@ -11,7 +11,7 @@
     <title>LEDS LOGIN</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'css/bootstrap/bootstrap.min.css'%}" rel="stylesheet">    
+    <link href="{% static 'css/bootstrap/bootstrap.min.css'%}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
@@ -21,8 +21,8 @@
     <form class="form-signin" method="post">
 
       <div class="text-center mb-4">
-        <img class="mb-4" src="{%static 'img/LEDS.png'%}" alt="" width="250">
-        
+        <img class="mb-4" src="{%static 'img/img_leds.png'%}" alt="" width="250">
+
       </div>
     {%csrf_token%}
     {% for error in form.non_field_errors %}
@@ -46,7 +46,7 @@
     {% endfor %}
 
       <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-      
+
     </form>
 
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

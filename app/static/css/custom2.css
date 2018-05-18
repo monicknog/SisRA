@@ -4,7 +4,7 @@
 }
 
 input#id_nome{
-  
+
 }
 html,
 body {
@@ -31,7 +31,7 @@ footer {
 .list-group{
   padding-top: 5px;
   padding-bottom: 5px;
-  
+
 }
 
 .list-group-item{
@@ -48,3 +48,12 @@ footer {
 
 .dropdown-item{
   color: white;}
+
+
+input{
+    text-transform:uppercase;
+}
+
+ul.errorlist {
+    color: red;
+}

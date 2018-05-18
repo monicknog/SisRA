@@ -5,9 +5,10 @@ from django.conf import settings
 
 class Professor(models.Model):
 	nome = models.CharField('Nome', max_length=100, unique = True)
-	
+
 	def __str__(self):
 		return self.nome
+
 
 	class Meta:
 		verbose_name='Orientador';
@@ -17,8 +18,9 @@ class Professor(models.Model):
 		self.nome = self.nome.upper()
 		super(Professor, self).save(force_insert, force_update)
 
+
 class Bolsista(models.Model):
-	
+
 	TIPO_CHOICES = (
 	    (0, 'Voluntário'),
 	    (1, 'Remunerado'),
@@ -26,13 +28,13 @@ class Bolsista(models.Model):
 
 
 	nome = models.CharField('Nome', max_length=100)
-	matricula = models.CharField('Matricula', max_length=20,unique=True)
+	matricula = models.CharField('Matricula', max_length= 100,unique=True)
 	cartao_rfid = models.CharField('Cartão RFID', max_length=100, null=True)
 	professor = models.ForeignKey(Professor, verbose_name='Orientador', related_name='bolsista_professor', on_delete=models.CASCADE, default=True)
 	tipo_bolsa = models.IntegerField('Tipo', choices=TIPO_CHOICES)
 	carga_horaria_semanal = models.IntegerField('Carga Horaria (semanal)', validators=[MinValueValidator(1)])
-	
-    
+
+
 	def __str__(self):
 		return self.nome
 

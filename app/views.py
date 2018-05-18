@@ -62,7 +62,7 @@ def create_professor(request):
 	if form.is_valid():
 		form.save()
 		return redirect('app:list_professor')
-	
+
 	return render(request, 'professor/cad_professor.html',{'form':form})
 
 
@@ -169,14 +169,14 @@ def test_acesso(request, pk):
 				novo_acesso.data = date.today()
 				novo_acesso.hora_entrada = timezone.localtime(timezone.now()).time()
 				novo_acesso.save()
-				redirect('app:list_acesso')	
+				redirect('app:list_acesso')
 		else:
 			novo_acesso = Acesso()
 			novo_acesso.bolsista =  bolsista
 			novo_acesso.data = date.today()
 			novo_acesso.hora_entrada = timezone.localtime(timezone.now()).time()
 			novo_acesso.save()
-			redirect('app:list_acesso')	
+			redirect('app:list_acesso')
 	except Bolsista.DoesNotExist:
 		redirect('app:list_acesso')
 	acessos = Acesso.objects.all()
@@ -246,7 +246,7 @@ class RelatorioPeriodoB(View):
 #		bolsistas = Bolsista.objects.get(pk=pk)
 
 #		acessos = Acesso.objects.filter(data__range=(data_ini,data_fim))
-		
+
 		th = acessos.aggregate(total=Sum('total_horas'))
 		d1 = datetime.datetime.strptime(data_ini, "%Y-%m-%d").date()
 		d2 = datetime.datetime.strptime(data_fim, "%Y-%m-%d").date()

@@ -22,18 +22,18 @@
      <div class="form-group">
         <div class="row">
             <div class="col-md-2 col-sm-2">
-              {{ field.label_tag }}  
+              {{ field.label_tag }}
             </div>
             <div class="col-md-2 col-sm-2">
                 {{ field }}
-            </div>  
+            </div>
+
+        </div>
             {{ field.errors }}
-        </div>      
-        
     </div>
     {% endfor %}
-                
-    <button type="submit" class="btn btn-primary">Salvar</button>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
     </div>
 </form>
 {% endblock %}
