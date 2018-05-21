@@ -42,7 +42,7 @@
             </li>-->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Professor
+                Orientador
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{%url 'app:create_professor'%}">Cadastrar</a>
@@ -98,6 +98,7 @@
     {% endblock %}
     </main>
 
+      
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster
@@ -109,7 +110,20 @@
   <script src="{% static 'js/popper.min.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
-    {%block javascript%}{%endblock%}
+    {%block javascript%}
+    <script>
+      (function($) {
+          'use strict';
+          $(function() {
+              $('.cancel-link').click(function(e) {
+                  e.preventDefault();
+                  window.history.back();
+              });
+          });
+      });
+      </script>
+
+    {%endblock%}
 
 
   </body>
