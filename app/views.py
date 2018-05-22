@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 import serial
 import json
 from django.shortcuts import render, redirect, get_object_or_404, reverse
@@ -408,7 +409,7 @@ def teste_aja(request):
 		dx = {
 			'key_value':key_value
 		}
-		return HttpResponse(json.dumps(dx), content_type='application/json')
+		return JsonResponse({'key_value':key_value})
 		#return render(request, 'teste.html', {'key_value':key_value})
 	except serial.SerialException as e:
 		return render(request, 'teste.html', {'key_value':e})
