@@ -43,15 +43,29 @@
 {%block javascript%}
 
 <script type="text/javascript">
+//    $(document).ready(function(){
+
+//      $('.btn').click(function(){
+//        $.get('/teste_aja/', function(data){
+            /*alert(data.text);*/
+//            document.getElementById("id_cartao_rfid").value = data.key_value;
+//        });
+//      });
+  
+//    });
     $(document).ready(function(){
 
       $('.btn').click(function(){
-        $.get('/teste_aja/', function(data){
-            /*alert(data.text);*/
-            document.getElementById("id_cartao_rfid").value = data.key_value;
-        });
-      });
-  
-    });
+        $.ajax({url: '/teste_aja/',
+                type: 'GET',
+                data: data,
+                success: function(data){ 
+                    console.log(data.mystring);
+                    document.getElementById("id_cartao_rfid").value = data.key_value;
+                }
+              });
+       });
+   });
+          
   </script>
 {%endblock%}
