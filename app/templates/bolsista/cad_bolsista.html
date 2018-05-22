@@ -48,7 +48,7 @@
       $('.btn').click(function(){
         $.get('/teste_aja/', function(data){
             /*alert(data.text);*/
-            document.getElementById("id_cartao_rfid").value = data.valu;
+            document.getElementById("id_cartao_rfid").value = data.key_value;
         });
       });
   

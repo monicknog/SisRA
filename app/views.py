@@ -1,3 +1,4 @@
+import serial
 import json
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth import authenticate, login, get_user_model
@@ -377,12 +378,39 @@ def teste_ajax(request, id_):
 	}
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
-def teste_aja(request):
-	idx = "Id recebido via AJAX: "
-	message = "Apresente o Cartão RFID"
-	dx = {
+#def teste_aja(request):
+#	idx = "Id recebido via AJAX: "
+#	message = "Apresente o Cartão RFID"
+#	dx = {
+#
+#		'text': idx,
+#		'valu': "ttt",
+#	}
+#	return HttpResponse(json.dumps(dx), content_type='application/json')
 
-		'text': idx,
-		'valu': "ttt",
-	}
-	return HttpResponse(json.dumps(dx), content_type='application/json')
+def teste_aja(request):
+	path = "/dev/ttyACM0"
+	baudrate = 9600
+	con_serial = serial.Serial(path, baudrate)
+	try:
+		while True:
+			if(con_serial.readline() != ""):
+				key_value = str(con_serial.readline())
+				for i in range(len(key_value)):
+					key_value = key_value.replace("b\'","")
+				
+				for i in range(len(key_value)):
+					key_value = key_value.replace("\'", "")
+
+				for i in range(len(key_value)):
+					key_value = key_value.replace("\\r\\n", "")
+
+		dx = {
+			'key_value':key_value
+		}
+		return HttpResponse(json.dumps(dx), content_type='application/json')
+		#return render(request, 'teste.html', {'key_value':key_value})
+	except serial.SerialException as e:
+		return render(request, 'teste.html', {'key_value':e})
+	finally:
+		con_serial.close()	
