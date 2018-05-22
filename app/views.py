@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
@@ -40,6 +41,12 @@ def logar(request):
 
 def relatorio_op(request):
 	return render(request, 'acesso/relatorio_op.html')
+
+def modal(request):
+	return render(request, 'basemodal.html')
+
+def modalt(request):
+	return render(request, 'baset.html')
 
 
 @login_required(login_url='/login')
@@ -104,6 +111,7 @@ def home_bolsista(request):
 @login_required(login_url='/login')
 def create_bolsista(request):
 	form = BolsistaForm(request.POST or None)
+	form.fields['cartao_rfid'].widget.attrs['readonly'] = True
 	if form.is_valid():
 		form.save()
 		return redirect('app:list_bolsista')
@@ -315,3 +323,66 @@ class RelatorioPeriodo(View):
 		response['Content-Disposition'] = 'attachment; filename=RelatorioPeriodo.pdf'
 		return response
 
+
+
+
+@login_required(login_url='/login')
+def create_bolsista2(request):
+	path = "/dev/ttyACM0"
+	baudrate = 9600
+	con_serial = serial.Serial(path, baudrate)
+	form = BolsistaForm(request.POST or None)
+	try:
+		while True:
+			if(con_serial.readline() != ""):
+				key_value = str(con_serial.readline())
+				for i in range(len(key_value)):
+					key_value = key_value.replace("b\'","")
+				
+				for i in range(len(key_value)):
+					key_value = key_value.replace("\'", "")
+
+				for i in range(len(key_value)):
+					key_value = key_value.replace("\\r\\n", "")
+
+		
+		
+		if form.is_valid():
+			bolsista = form.save(commit = False)
+			bolsista.cartao_rfid = key_value
+			bolsista.save()
+			return redirect('app:list_bolsista')
+		return render(request, 'bolsista/cad_bolsista.html', {'form':form})
+		#return render(request, 'teste.html', {'key_value':key_value})
+	except serial.SerialException as e:
+		return render(request, 'teste.html', {'key_value':e})
+	finally:
+		con_serial.close()
+	
+@login_required(login_url='/login')
+def create_bolsista3(request):
+	return render(request, 'bolsista/cad_test.html', {})
+
+def t(request):
+	d = request.POST.get('nome')
+	return render(request, 'bolsista/cad_.html', {'d':d})
+
+def teste_ajax(request, id_):
+	idx = "Id recebido via AJAX: " + id_
+	message = "Apresente o Cartão RFID"
+	data = {
+
+		'text': idx,
+		'valu': "ttt",
+	}
+	return HttpResponse(json.dumps(data), content_type='application/json')
+
+def teste_aja(request):
+	idx = "Id recebido via AJAX: "
+	message = "Apresente o Cartão RFID"
+	dx = {
+
+		'text': idx,
+		'valu': "ttt",
+	}
+	return HttpResponse(json.dumps(dx), content_type='application/json')

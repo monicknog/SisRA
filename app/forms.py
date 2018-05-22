@@ -11,7 +11,7 @@ class BolsistaForm(forms.ModelForm):
 	class Meta:
 		model = Bolsista
 		fields = ['nome','matricula','cartao_rfid','professor','tipo_bolsa','carga_horaria_semanal']
-
+		readonly_fields=['cartao_rfid']
 
 class AcessoForm(forms.ModelForm):
 	class Meta:

@@ -8,6 +8,10 @@ urlpatterns = [
 
 
 	url(r'^$', views.home, name='home'),
+	url(r'^modal/$', views.modal, name='modal'),
+	url(r'^teste_ajax/(\d+)/$', views.teste_ajax, name='teste_ajax' ),
+	url(r'^teste_aja/$', views.teste_aja, name='teste_aja' ),
+	url(r'^modalt/$', views.modalt, name='modalt'),
 	url(r'^relatorio/$', views.relatorio_op, name='relatorio_op'),
 	url(r'^login/$', views.logar, name='logar'),
 	url(r'^sair/$', auth_views.logout,{'next_page': 'app:logar'}, name='sair'),	
@@ -47,4 +51,7 @@ urlpatterns = [
 	url(r'^professor/deletar_professor/(?P<pk>\d+)$', views.delete_professor, name='delete_professor'),
 	url(r'^professor/list_professor/$', views.list_professor, name='list_professor'),   
 
+	url(r'^teste_cadastro/$', views.create_bolsista2, name='create_bolsista2'),
+	url(r'^teste_/$', views.create_bolsista3, name='create_bolsista3'),
+	url(r'^t/$', views.t, name='t'),
 ]
