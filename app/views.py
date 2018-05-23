@@ -249,11 +249,13 @@ class RelatorioPeriodoB(View):
 			bolsista = Bolsista.objects.get(pk=pk)
 			acessos = Acesso.objects.filter(data__range=(data_ini,data_fim), bolsista = bolsista).exclude(hora_saida=None)
 			titulo = '%s' %(bolsista.nome)
+			is_todos = 0
 
 		else:
 			bolsista = Bolsista.objects.all()
 			acessos = Acesso.objects.filter(data__range=(data_ini,data_fim)).exclude(hora_saida=None)
 			titulo = 'TODOS BOLSISTAS'
+			is_todos = 1
 
 #		bolsistas = Bolsista.objects.get(pk=pk)
 
@@ -273,6 +275,7 @@ class RelatorioPeriodoB(View):
 			'data_inicio':d1.strftime("%d/%m/%Y"),
 			'data_fim':d2.strftime("%d/%m/%Y"),
 			'titulo': titulo,
+			'is_todos':is_todos,
 		}
 		pdf = render_to_pdf('pdf/relatorio_periodo.html',data)
 		response = HttpResponse(pdf,content_type='application/pdf')
