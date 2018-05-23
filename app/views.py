@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 import serial
 import json
 from django.shortcuts import render, redirect, get_object_or_404, reverse
@@ -413,6 +414,7 @@ def teste_aja(request):
 		return render(request, 'teste.html', {'key_value':e})
 	finally:
 		con_serial.close()
+
 
 def teste_aja2(request):
 	path = "/dev/ttyACM0"
