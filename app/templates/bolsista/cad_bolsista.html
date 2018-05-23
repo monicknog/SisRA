@@ -26,7 +26,7 @@
             </div>
             <div class="col-md-8 col-sm-8">
                 
-                {{ field }} {% if field.name == 'cartao_rfid' %}<p class="btn" style="margin: 0px; cursor: pointer; color: blueviolet;">Click aqui, posicione o cartão RFID e aguarde!</p>{%endif%}
+                {{ field }} {% if field.name == 'cartao_rfid' %}<p id="rf" style="margin: 0px; cursor: pointer; color: blueviolet;">Click aqui, posicione o cartão RFID e aguarde!</p>{%endif%}
                 
                 
             </div>
@@ -42,16 +42,12 @@
 {% endblock %}
 {%block javascript%}
 
-<script type="text/javascript">
-    $(document).ready(function(){
-
-      $('.btn').click(function(){
+<script>
+        $('#rf').on('click', function(){
         $.get('/teste_aja/', function(data){
-            /*alert(data.text);*/
+            alert("Leitura realizada com sucesso "+data.key_value);
             document.getElementById("id_cartao_rfid").value = data.key_value;
         });
       });
-  
-    });
   </script>
 {%endblock%}

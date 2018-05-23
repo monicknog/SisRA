@@ -8,9 +8,11 @@ urlpatterns = [
 
 
 	url(r'^$', views.home, name='home'),
+#	url(r'^trfid/$', views.test_rfid, name='test_rfid'),
 	url(r'^modal/$', views.modal, name='modal'),
 	url(r'^teste_ajax/(\d+)/$', views.teste_ajax, name='teste_ajax' ),
 	url(r'^teste_aja/$', views.teste_aja, name='teste_aja' ),
+	url(r'^teste_aja2/$', views.teste_aja2, name='teste_aja2' ),
 	url(r'^modalt/$', views.modalt, name='modalt'),
 	url(r'^relatorio/$', views.relatorio_op, name='relatorio_op'),
 	url(r'^login/$', views.logar, name='logar'),
@@ -54,4 +56,6 @@ urlpatterns = [
 	url(r'^teste_cadastro/$', views.create_bolsista2, name='create_bolsista2'),
 	url(r'^teste_/$', views.create_bolsista3, name='create_bolsista3'),
 	url(r'^t/$', views.t, name='t'),
+
+
 ]

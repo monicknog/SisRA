@@ -404,13 +404,67 @@ def teste_aja(request):
 
 				for i in range(len(key_value)):
 					key_value = key_value.replace("\\r\\n", "")
-
-		dx = {
-			'key_value':key_value
-		}
-		return HttpResponse(json.dumps(dx), content_type='application/json')
+				dx = {
+					'key_value':key_value
+				}
+				return HttpResponse(json.dumps(dx), content_type='application/json')
 		#return render(request, 'teste.html', {'key_value':key_value})
 	except serial.SerialException as e:
 		return render(request, 'teste.html', {'key_value':e})
 	finally:
-		con_serial.close()	
+		con_serial.close()
+
+def teste_aja2(request):
+	path = "/dev/ttyACM0"
+	baudrate = 9600
+	con_serial = serial.Serial(path, baudrate)
+	try:
+		while True:
+			if(con_serial.readline() != ""):
+				key_value = str(con_serial.readline())
+				for i in range(len(key_value)):
+					key_value = key_value.replace("b\'","")
+				
+				for i in range(len(key_value)):
+					key_value = key_value.replace("\'", "")
+
+				for i in range(len(key_value)):
+					key_value = key_value.replace("\\r\\n", "")
+				dx = {
+					'key_value':key_value
+				}
+				try:
+					bolsista = Bolsista.objects.get(cartao_rfid=key_value)
+					acesso = Acesso.objects.filter(bolsista=bolsista).order_by('-id').first()
+					if acesso is not None:
+
+						if acesso.hora_saida == None:
+							acesso.hora_saida = timezone.localtime(timezone.now()).time()
+							acesso.total_horas = timedelta(hours = acesso.hora_saida.hour, minutes=acesso.hora_saida.minute, seconds=acesso.hora_saida.second) - timedelta(hours = acesso.hora_entrada.hour, minutes=acesso.hora_entrada.minute, seconds=acesso.hora_entrada.second)
+							acesso.save()
+							message = "Saída registrada"
+							return HttpResponse(json.dumps({'message':message}), content_type='application/json')
+						else:
+							novo_acesso = Acesso()
+							novo_acesso.bolsista =  bolsista
+							novo_acesso.data = date.today()
+							novo_acesso.hora_entrada = timezone.localtime(timezone.now()).time()
+							novo_acesso.save()
+							message = "Entrada Registrada"
+							return HttpResponse(json.dumps({'message':message}), content_type='application/json')
+					else:
+						novo_acesso = Acesso()
+						novo_acesso.bolsista =  bolsista
+						novo_acesso.data = date.today()
+						novo_acesso.hora_entrada = timezone.localtime(timezone.now()).time()
+						novo_acesso.save()
+						message = "Entrada Registrada"
+						return HttpResponse(json.dumps({'message':message}), content_type='application/json')
+				except Bolsista.DoesNotExist:
+					message = "Cartão não está relacionado a nenhum bolsista"
+					return HttpResponse(json.dumps({'message':message}), content_type='application/json')
+		#return render(request, 'teste.html', {'key_value':key_value})
+	except serial.SerialException as e:
+		return render(request, 'teste.html', {'key_value':e})
+	finally:
+		con_serial.close()
