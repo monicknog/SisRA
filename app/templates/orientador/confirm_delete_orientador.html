@@ -5,7 +5,7 @@
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb "Remover Orientador" "delete_professor" %}
+    {% breadcrumb "Remover Orientador" "delete_orientador" %}
 {% endblock %}
 
 
@@ -14,9 +14,9 @@
 <form method="post">
     {%csrf_token%}
 
-<h2>Deseja realmente excluir {{professor.nome}} ?</h2>
+<h2>Deseja realmente excluir {{orientador.nome}} ?</h2>
     <button type="submit" class="btn btn-success">Confirmar</button>
-    <a href="{%url 'app:list_professor'%}" class="btn btn-danger cancel-link">Cancelar</a>
+    <a href="{%url 'app:list_orientador'%}" class="btn btn-danger cancel-link">Cancelar</a>
     </div>
 </form>
 {% endblock %}

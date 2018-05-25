@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_bootstrap_breadcrumbs',
     'widget_tweaks',
     'app',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

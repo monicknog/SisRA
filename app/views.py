@@ -7,8 +7,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib import messages
-from .forms import ProfessorForm, BolsistaForm, AcessoForm
-from .models import Professor, Bolsista, Acesso
+from .forms import OrientadorForm, BolsistaForm, AcessoForm
+from .models import Orientador, Bolsista, Acesso
 from datetime import datetime, time, date, timedelta
 import datetime
 from django.utils import timezone
@@ -18,6 +18,27 @@ from django.http import HttpResponse
 from django.db.models import Sum
 from django.views.generic import View
 from app.utils import render_to_pdf #created in step 4
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import user_passes_test
+
+@user_passes_test(lambda u: u.is_superuser)
+def registrar(request):
+    
+    # Se dados forem passados via POST
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        
+        if form.is_valid(): # se o formulario for valido
+            form.save() # cria um novo usuario a partir dos dados enviados 
+            return redirect("/login/") # redireciona para a tela de login
+        else:
+            # mostra novamente o formulario de cadastro com os erros do formulario atual
+            return render(request, "registrar.html", {"form": form})
+    
+    # se nenhuma informacao for passada, exibe a pagina de cadastro com o formulario
+    return render(request, "registrar.html", {"form": UserCreationForm() })
+
+
 
 class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
@@ -59,49 +80,50 @@ def home(request):
 		bolsistas = Bolsista.objects.all()
 		return render(request, 'home_user_comum.html',{'bolsistas':bolsistas})
 
-def home_professor(request):
-	template_name = 'professor/home_professor.html'
-	context = {}
-	return render(request, template_name, context)
+#def home_professor(request):
+#	template_name = 'professor/home_professor.html'
+#	context = {}
+#	return render(request, template_name, context)
 
 #Professor
 @login_required(login_url='/login')
-def create_professor(request):
-	form = ProfessorForm(request.POST or None)
+@user_passes_test(lambda u: u.is_superuser, login_url='/login/')
+def create_orientador(request):
+	form = OrientadorForm(request.POST or None)
 	if form.is_valid():
 		form.save()
-		return redirect('app:list_professor')
+		return redirect('app:list_orientador')
 
-	return render(request, 'professor/cad_professor.html',{'form':form})
+	return render(request, 'orientador/cad_orientador.html',{'form':form})
 
 
 @login_required(login_url='/login')
-def update_professor(request, pk):
-	professor = Professor.objects.get(pk=pk)
-	form = ProfessorForm(request.POST or None, instance = professor)
+def update_orientador(request, pk):
+	orientador = Orientador.objects.get(pk=pk)
+	form = OrientadorForm(request.POST or None, instance = orientador)
 
 	if form.is_valid():
 		form.save()
-		return redirect('app:list_professor')
-	return render(request,'professor/cad_professor.html',{'form':form})
+		return redirect('app:list_orientador')
+	return render(request,'orientador/cad_orientador.html',{'form':form})
 
 
 @login_required(login_url='/login')
-def list_professor(request):
-	professores = Professor.objects.all()
-	return render(request, 'professor/list_professor.html',{'professores':professores})
+def list_orientador(request):
+	orientadores = Orientador.objects.all()
+	return render(request, 'orientador/list_orientador.html',{'orientadores':orientadores})
 
 
 @login_required(login_url='/login')
-def delete_professor(request, pk):
+def delete_orientador(request, pk):
 	try:
-		professor = Professor.objects.get(pk=pk)
+		orientador = Orientador.objects.get(pk=pk)
 		if request.method == 'POST':
-			professor.delete()
-			return redirect('app:list_professor')
-	except Professor.DoesNotExist:
+			orientador.delete()
+			return redirect('app:list_orientador')
+	except Orientador.DoesNotExist:
 		return redirect('app:home')
-	return render(request,'professor/confirm_delete_professor.html',{'professor':professor})
+	return render(request,'orientador/confirm_delete_orientador.html',{'orientador':orientador})
 
 #Bolsista
 def home_bolsista(request):
@@ -249,13 +271,13 @@ class RelatorioPeriodoB(View):
 			bolsista = Bolsista.objects.get(pk=pk)
 			acessos = Acesso.objects.filter(data__range=(data_ini,data_fim), bolsista = bolsista).exclude(hora_saida=None)
 			titulo = '%s' %(bolsista.nome)
-			is_todos = 0
+			is_todos = '0'
 
 		else:
 			bolsista = Bolsista.objects.all()
 			acessos = Acesso.objects.filter(data__range=(data_ini,data_fim)).exclude(hora_saida=None)
 			titulo = 'TODOS BOLSISTAS'
-			is_todos = 1
+			is_todos = '1'
 
 #		bolsistas = Bolsista.objects.get(pk=pk)
 
@@ -467,7 +489,7 @@ def teste_aja2(request):
 						return HttpResponse(json.dumps({'message':message}), content_type='application/json')
 				except Bolsista.DoesNotExist:
 					message = "Cartão não está relacionado a nenhum bolsista"
-					return HttpResponse(json.dumps({'message':message}), content_type='application/json')
+					return HttpResponse(json.dumps({'message':message, 'key_value':key_value}), content_type='application/json')
 		#return render(request, 'teste.html', {'key_value':key_value})
 	except serial.SerialException as e:
 		return render(request, 'teste.html', {'key_value':e})

@@ -46,8 +46,13 @@
 <script>
         $('#rf').on('click', function(){
         $.get('/teste_aja/', function(data){
-            alert("Leitura realizada com sucesso "+data.key_value);
-            document.getElementById("id_cartao_rfid").value = data.key_value;
+            if(data.key_value == ''){
+                alert('Erro ao ler cartão, tente novamente.');
+            }else{
+                alert("Leitura realizada com sucesso "+data.key_value);
+                document.getElementById("id_cartao_rfid").value = data.key_value;
+            }
+            
         });
       });
 

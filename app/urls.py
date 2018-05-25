@@ -47,15 +47,16 @@ urlpatterns = [
 	
 	#url(r'^editar_movimentacao/$', views.update_movimentacao, name='update_movimentacao'),
     #url(r'^list_movimentacao/$', views.list_movimentacao, name='list_movimentacao'),
-	url(r'^professor/$', views.list_professor, name='list_professor'),
-	url(r'^professor/cad_professor/$', views.create_professor, name='create_professor'),	
-	url(r'^professor/editar_professor/(?P<pk>\d+)$', views.update_professor, name='update_professor'),
-	url(r'^professor/deletar_professor/(?P<pk>\d+)$', views.delete_professor, name='delete_professor'),
-	url(r'^professor/list_professor/$', views.list_professor, name='list_professor'),   
+	url(r'^orientador/$', views.list_orientador, name='list_orientador'),
+	url(r'^orientador/cad_orientador/$', views.create_orientador, name='create_orientador'),	
+	url(r'^orientador/editar_orientador/(?P<pk>\d+)$', views.update_orientador, name='update_orientador'),
+	url(r'^orientador/deletar_orientador/(?P<pk>\d+)$', views.delete_orientador, name='delete_orientador'),
+	url(r'^orientador/list_orientador/$', views.list_orientador, name='list_orientador'),   
 
 	url(r'^teste_cadastro/$', views.create_bolsista2, name='create_bolsista2'),
 	url(r'^teste_/$', views.create_bolsista3, name='create_bolsista3'),
 	url(r'^t/$', views.t, name='t'),
+	url(r'^register/$', views.registrar, name='registrar'),
 
 
 ]

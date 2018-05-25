@@ -61,8 +61,15 @@
     <script>
       $(document).ready(function(){
         $.get('/teste_aja2/', function(data){
-          alert(data.message);
-          location.reload();
+          if (data.key_value == 'undefine' || data.key_value == 'UNDEFINE'){
+            alert('Erro na leitura do cartão, tente novamente');
+            location.reload();
+          }
+          else{
+            alert(data.message);
+            location.reload();
+          }
+          
       });
  });
     </script>

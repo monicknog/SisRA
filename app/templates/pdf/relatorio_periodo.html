@@ -59,7 +59,9 @@
         <table class="table">
         <thead>
         <tr>
+            {%if is_todos == '1'%}
             <th>Bolsista</th>
+            {%endif%}
             <th>Data</th>
             <th>Entrada</th>
             <th>Saída</th>
@@ -69,7 +71,9 @@
         <tbody>
         {% for acesso in acessos %}
             <tr>
+                {%if is_todos == '1'%}
                 <td>{{acesso.bolsista}}</td>
+                {%endif%}
                 <td>{{acesso.data}}</td>
                 <td>{{ acesso.hora_entrada}}</td>
                 <td>{{ acesso.hora_saida }}</td>

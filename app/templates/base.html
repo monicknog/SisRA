@@ -32,7 +32,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
             <!--<li class="nav-item">
-              <a class="nav-link" href="{%url 'app:list_professor'%}">Professor</a>
+              <a class="nav-link" href="{%url 'app:list_orientador'%}">Orientador</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{%url 'app:list_bolsista'%}">Bolsista</a>
@@ -45,8 +45,8 @@
                 Orientador
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{%url 'app:create_professor'%}">Cadastrar</a>
-                <a class="dropdown-item" href="{%url 'app:list_professor'%}">Listar</a>
+                <a class="dropdown-item" href="{%url 'app:create_orientador'%}">Cadastrar</a>
+                <a class="dropdown-item" href="{%url 'app:list_orientador'%}">Listar</a>
             </li>
 
             <li class="nav-item dropdown" >
@@ -71,6 +71,7 @@
             {% if user.is_authenticated %}
 
             <ul class="navbar-nav">
+                <li><a class="nav-link" href="{% url 'app:registrar' %}">Cadastrar Usuario Comum</a></li>
                 <li><a class="nav-link" href="{% url 'app:sair' %}">Sair</a></li>
             {% else %}
                 <li class="nav-item"><a class="nav-link" href="#"></a></li>

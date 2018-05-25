@@ -3,7 +3,7 @@ from django.core.validators import MinValueValidator
 from django.utils import timezone
 from django.conf import settings
 
-class Professor(models.Model):
+class Orientador(models.Model):
 	nome = models.CharField('Nome', max_length=100, unique = True)
 
 	def __str__(self):
@@ -16,7 +16,7 @@ class Professor(models.Model):
 
 	def save(self, force_insert=False, force_update=False):
 		self.nome = self.nome.upper()
-		super(Professor, self).save(force_insert, force_update)
+		super(Orientador, self).save(force_insert, force_update)
 
 
 class Bolsista(models.Model):
@@ -30,7 +30,7 @@ class Bolsista(models.Model):
 	nome = models.CharField('Nome', max_length=100)
 	matricula = models.CharField('Matricula', max_length= 100,unique=True)
 	cartao_rfid = models.CharField('Cartão RFID', max_length=100, null=True)
-	professor = models.ForeignKey(Professor, verbose_name='Orientador', related_name='bolsista_professor', on_delete=models.CASCADE, default=True)
+	orientador = models.ForeignKey(Orientador, verbose_name='Orientador', related_name='bolsista_professor', on_delete=models.CASCADE, default=True)
 	tipo_bolsa = models.IntegerField('Tipo', choices=TIPO_CHOICES)
 	carga_horaria_semanal = models.IntegerField('Carga Horaria (semanal)', validators=[MinValueValidator(1)])
 

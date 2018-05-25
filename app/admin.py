@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Bolsista, Professor, Acesso
+from .models import Bolsista, Orientador, Acesso
 
 
 class BolsistaAdmin(admin.ModelAdmin):
@@ -13,12 +13,12 @@ class AcessoAdmin(admin.ModelAdmin):
 
 
 
-class ProfessorAdmin(admin.ModelAdmin):
+class OrientadorAdmin(admin.ModelAdmin):
 
     list_display = ['nome']
     search_fields = ['name']
 
 
-admin.site.register(Professor, ProfessorAdmin)
+admin.site.register(Orientador, OrientadorAdmin)
 admin.site.register(Bolsista, BolsistaAdmin)
 admin.site.register(Acesso, AcessoAdmin)
