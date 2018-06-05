@@ -1,5 +1,6 @@
-Django==2.0.4
-django-bootstrap-breadcrumbs==0.9.1
-pytz==2018.4
-six==1.11.0
+Django
+django-bootstrap-breadcrumbs
+django-xhtml2pdf
+django-extensions
+django-widget-tweaks
 
