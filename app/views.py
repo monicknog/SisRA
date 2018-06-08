@@ -467,7 +467,8 @@ def teste_aja2(request):
 
 						if acesso.hora_saida == None:
 							acesso.hora_saida = timezone.localtime(timezone.now()).time()
-							acesso.total_horas = timedelta(hours = acesso.hora_saida.hour, minutes=acesso.hora_saida.minute, seconds=acesso.hora_saida.second) - timedelta(hours = acesso.hora_entrada.hour, minutes=acesso.hora_entrada.minute, seconds=acesso.hora_entrada.second)
+							data_saida = date.today()
+							acesso.total_horas = timedelta(hours = acesso.hora_saida.hour, minutes=acesso.hora_saida.minute, seconds=acesso.hora_saida.second, microseconds=1) - timedelta(hours = acesso.hora_entrada.hour, minutes=acesso.hora_entrada.minute, seconds=acesso.hora_entrada.second, microseconds=1)
 							acesso.save()
 							message = "Saída registrada"
 							return HttpResponse(json.dumps({'message':message}), content_type='application/json')
