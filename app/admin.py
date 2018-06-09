@@ -9,7 +9,7 @@ class BolsistaAdmin(admin.ModelAdmin):
 
 
 class AcessoAdmin(admin.ModelAdmin):
-	list_display = ['bolsista', 'hora_entrada', 'hora_saida','total_horas']
+	list_display = ['bolsista', 'data','hora_entrada', 'hora_saida','updated_at','total_horas']
 
 
 

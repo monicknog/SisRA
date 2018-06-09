@@ -50,6 +50,7 @@ class Bolsista(models.Model):
 class Acesso(models.Model):
 	bolsista = models.ForeignKey(Bolsista, verbose_name='Bolsista', related_name='bolsista_acesso', on_delete=models.CASCADE)
 	data = models.DateField('Data Acesso', null=True, blank=True)
+	updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 	hora_entrada = models.TimeField('Entrada', null=True, blank=True)
 	hora_saida = models.TimeField('Saída', null = True, blank=True)
 	total_horas = models.DurationField('Total', null = True, blank = True)

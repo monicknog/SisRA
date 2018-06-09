@@ -466,12 +466,25 @@ def teste_aja2(request):
 					if acesso is not None:
 
 						if acesso.hora_saida == None:
-							acesso.hora_saida = timezone.localtime(timezone.now()).time()
-							data_saida = date.today()
-							acesso.total_horas = timedelta(hours = acesso.hora_saida.hour, minutes=acesso.hora_saida.minute, seconds=acesso.hora_saida.second, microseconds=1) - timedelta(hours = acesso.hora_entrada.hour, minutes=acesso.hora_entrada.minute, seconds=acesso.hora_entrada.second, microseconds=1)
-							acesso.save()
-							message = "Saída registrada"
-							return HttpResponse(json.dumps({'message':message}), content_type='application/json')
+							if acesso.data == date.today():
+								
+								acesso.hora_saida = timezone.localtime(timezone.now()).time()
+								data_saida = date.today()
+								acesso.total_horas = timedelta(hours = acesso.hora_saida.hour, minutes=acesso.hora_saida.minute, seconds=acesso.hora_saida.second, microseconds=1) - timedelta(hours = acesso.hora_entrada.hour, minutes=acesso.hora_entrada.minute, seconds=acesso.hora_entrada.second, microseconds=1)
+								acesso.save()
+								message = "Saída registrada"
+								return HttpResponse(json.dumps({'message':message}), content_type='application/json')
+							else:
+								acesso.delete()
+								novo_acesso = Acesso()
+								novo_acesso.bolsista =  bolsista
+								novo_acesso.data = date.today()
+								novo_acesso.hora_entrada = timezone.localtime(timezone.now()).time()
+								novo_acesso.save()
+								message = "Data fora do ultimo registro da data de entrada, sendo assim, as horas não foram contadas e um novo acesso está sendo cadastrado. Não esqueça de apresentar o cartão na saída do laboratorio"
+								return HttpResponse(json.dumps({'message':message}), content_type='application/json')
+
+
 						else:
 							novo_acesso = Acesso()
 							novo_acesso.bolsista =  bolsista
