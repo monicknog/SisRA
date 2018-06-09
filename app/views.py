@@ -21,6 +21,7 @@ from app.utils import render_to_pdf #created in step 4
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import user_passes_test
 
+@login_required(login_url='/login')
 @user_passes_test(lambda u: u.is_superuser)
 def registrar(request):
     

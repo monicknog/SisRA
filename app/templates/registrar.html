@@ -1,38 +1,27 @@
 {% extends "base.html" %}
-{%load static%}
-
-{% load django_bootstrap_breadcrumbs %}
-
-{% block breadcrumbs %}
-    {{ block.super }}
-    {% breadcrumb "Usuario Comum" "registrar" %}
-{% endblock %}
-
-
-{%block content%}
-{% render_breadcrumbs %}
-
-{% for error in form.non_field_errors %}
+{%load static%}{% load django_bootstrap_breadcrumbs %}{% block breadcrumbs %}{{ block.super }}{% breadcrumb "Cadastrar Bolsista" "cad_bolsista" %}{% endblock %}{%block content%}{% render_breadcrumbs %}
+<form method="post">
+    {%csrf_token%}{% for error in form.non_field_errors %}
     <div class="form-group has-errors text-danger small">
         {{error}}
     </div>
-    {%endfor%}
-    {% for field in form %}
+    {%endfor%}{% for field in form %}
      <div class="form-group">
         <div class="row">
-            <div class="col-md-3 col-sm-3">
+            <div class="col-md-2 col-sm-2">
               {{ field.label_tag }}
             </div>
-            <div class="col-md-2 col-sm-2" style="text-transform: uppercase;">
+            <div class="col-md-8 col-sm-8">
                 {{ field }}
             </div>
+            {% if field.help_text %}
+            <div class="col-md-8 col-sm-8" style="color:purple; font-size: 12px;">
+        		<p class="help" style="color: purple;">{{ field.help_text|safe }}</p>
+        	{% endif %}    
+            </div>
         </div>
-        {{ field.errors }}
-
-    </div>
-    {% endfor %}
-
+            {{ field.errors }}
+    </div>{% endfor %}
     <button type="submit" class="btn btn-primary">Salvar</button>
     </div>
-</form>
-{% endblock %}
+</form>{% endblock %}

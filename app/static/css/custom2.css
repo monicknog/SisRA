@@ -50,10 +50,18 @@ footer {
   color: white;}
 
 
-input{
-    text-transform:uppercase;
-}
+
 
 ul.errorlist {
     color: red;
+}
+
+#rf{
+  margin: 0px;
+  cursor: pointer; 
+  color: blueviolet;
+}
+
+#rf:houver{
+  background-color: gray;
 }

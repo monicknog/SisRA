@@ -1,0 +1,56 @@
+1528508256738	geckodriver	INFO	geckodriver 0.20.1
+1528508256753	geckodriver	INFO	Listening on 127.0.0.1:44886
+1528508256970	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-profile" "/tmp/rust_mozprofile.cgdsDBWLQ3Ah"
+[PIPELIGHT:LIN:unknown] attached to process.
+[PIPELIGHT:LIN:unknown] checking environment variable PIPELIGHT_SILVERLIGHT5_1_CONFIG.
+[PIPELIGHT:LIN:unknown] searching for config file pipelight-silverlight5.1.
+[PIPELIGHT:LIN:unknown] trying to load config file from '/home/daimo/.config/pipelight-silverlight5.1'.
+[PIPELIGHT:LIN:unknown] trying to load config file from '/etc/pipelight-silverlight5.1'.
+[PIPELIGHT:LIN:unknown] trying to load config file from '/usr/share/pipelight/configs/pipelight-silverlight5.1'.
+[PIPELIGHT:LIN:unknown] sandbox not found or not installed!
+[PIPELIGHT:LIN:silverlight5.1] using wine prefix directory /home/daimo/.wine-pipelight.
+[PIPELIGHT:LIN:silverlight5.1] checking plugin installation - this might take some time.
+[install-dependency] wine-silverlight5.1-installer is already installed in '/home/daimo/.wine-pipelight'.
+[install-dependency] wine-mpg2splt-installer is already installed in '/home/daimo/.wine-pipelight'.
+fixme:winediag:start_process Wine Staging 1.9.7 is a testing version containing experimental patches.
+fixme:winediag:start_process Please mention your exact version when filing bug reports on winehq.org.
+wine: DLL não encontrado.
+err:wineboot:ProcessRunKeys Error running cmd L"C:\\windows\\system32\\winemenubuilder.exe -a -r" (1157)
+[PIPELIGHT:LIN:silverlight5.1] common.c:162:receiveCommand(): unable to receive data within the specified timeout.
+[PIPELIGHT:LIN:silverlight5.1] basicplugin.c:128:attach(): error during the initialization of the wine process - aborting.
+[PIPELIGHT:WIN:silverlight5.1] embedded mode         is on.
+[PIPELIGHT:WIN:silverlight5.1] windowless mode       is off.
+[PIPELIGHT:WIN:silverlight5.1] linux windowless mode is off.
+[PIPELIGHT:WIN:silverlight5.1] force SetWindow       is off.
+[PIPELIGHT:WIN:silverlight5.1] window class hook     is on.
+[PIPELIGHT:WIN:silverlight5.1] strict draw ordering  is off.
+1528508316123	Marionette	INFO	Listening on port 36215
+1528508318772	Marionette	WARN	TLS certificate errors will be ignored for this session
+[PIPELIGHT:WIN:silverlight5.1] replaced API function CreateWindowExA.
+[PIPELIGHT:WIN:silverlight5.1] replaced API function CreateWindowExW.
+[PIPELIGHT:WIN:silverlight5.1] replaced API function TrackPopupMenuEx.
+[PIPELIGHT:WIN:silverlight5.1] replaced API function TrackPopupMenu.
+fixme:ntdll:EtwRegisterTraceGuidsW (0x7b8d21a7, 0x7b970120, {aa087e0e-0b35-4e28-8f3a-440c3f51eef1}, 1, 0x71f478, (null), (null), 0x7b970120): stub
+fixme:ntdll:EtwRegisterTraceGuidsW   register trace class {aa087e0e-0b35-4e28-8f3a-440c3f51eef1}
+[PIPELIGHT:WIN:silverlight5.1] init successful!
+1528508463818	geckodriver	INFO	geckodriver 0.20.1
+1528508463890	geckodriver	INFO	Listening on 127.0.0.1:51170
+1528508464864	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-profile" "/tmp/rust_mozprofile.CwChvwayj7Xg"
+[PIPELIGHT:LIN:unknown] attached to process.
+[PIPELIGHT:LIN:unknown] checking environment variable PIPELIGHT_SILVERLIGHT5_1_CONFIG.
+[PIPELIGHT:LIN:unknown] searching for config file pipelight-silverlight5.1.
+[PIPELIGHT:LIN:unknown] trying to load config file from '/home/daimo/.config/pipelight-silverlight5.1'.
+[PIPELIGHT:LIN:unknown] trying to load config file from '/etc/pipelight-silverlight5.1'.
+[PIPELIGHT:LIN:unknown] trying to load config file from '/usr/share/pipelight/configs/pipelight-silverlight5.1'.
+[PIPELIGHT:LIN:unknown] sandbox not found or not installed!
+[PIPELIGHT:LIN:silverlight5.1] using wine prefix directory /home/daimo/.wine-pipelight.
+[PIPELIGHT:LIN:silverlight5.1] checking plugin installation - this might take some time.
+[PIPELIGHT:LIN:silverlight5.1] basicplugin.c:299:checkPluginInstallation(): Plugin installer did not run correctly (error occured).
+[PIPELIGHT:LIN:silverlight5.1] basicplugin.c:116:attach(): plugin not correctly installed - aborting.
+[install-dependency] wine-silverlight5.1-installer is already installed in '/home/daimo/.wine-pipelight'.
+[install-dependency] wine-mpg2splt-installer is already installed in '/home/daimo/.wine-pipelight'.
+1528508499847	Marionette	INFO	Listening on port 44896
+1528508500459	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(firefox:11158): GLib-GObject-WARNING **: /build/glib2.0-prJhLS/glib2.0-2.48.2/./gobject/gsignal.c:3486: signal name 'selection_changed' is invalid for instance '0x7fb7b967dec0' of type 'MaiAtkType139'
+*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping

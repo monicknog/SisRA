@@ -37,3 +37,10 @@
     </div>
 </form>
 {% endblock %}
+{%block javascript%}
+
+    $('input').keyup(function(){
+    this.value = this.value.toUpperCase();
+});
+
+{%endblock%}
