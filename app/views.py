@@ -313,7 +313,7 @@ def list(request, data_ini, data_fim):
 class RelatorioBolsista(View):
     def get(self, request, pk, **kwargs):
         bolsista = Bolsista.objects.get(pk=pk)
-        acessos = Acesso.objects.filter(bolsista=bolsista).exclude(hora_saida=None)
+        acessos = Acesso.objects.filter(bolsista=bolsista,updated_at=data).exclude(hora_saida=None)
         if acessos.exists():
         	th = acessos.aggregate(total=Sum('total_horas'))
         else:
