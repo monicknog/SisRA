@@ -30,7 +30,7 @@ def registrar(request):
         
         if form.is_valid(): # se o formulario for valido
             form.save() # cria um novo usuario a partir dos dados enviados 
-            return redirect("/login/") # redireciona para a tela de login
+            return redirect("/") # redireciona para a tela de login
         else:
             # mostra novamente o formulario de cadastro com os erros do formulario atual
             return render(request, "registrar.html", {"form": form})
@@ -39,7 +39,7 @@ def registrar(request):
     return render(request, "registrar.html", {"form": UserCreationForm() })
 
 
-
+@user_passes_test(lambda u: u.is_superuser)
 class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
         acessos = Acesso.objects.all()
@@ -52,6 +52,7 @@ class GeneratePdf(View):
         response['Content-Disposition'] = 'attachment; filename="report.pdf"'
         return response
 #Login e Home
+    
 def logar(request):
 	if request.method == 'POST':
 		form = AuthenticationForm(data=request.POST)
@@ -62,12 +63,15 @@ def logar(request):
 			return render(request,"login.html",{"form":form})
 	return render(request, "login.html", {"form":AuthenticationForm()})
 
+@user_passes_test(lambda u: u.is_superuser)
 def relatorio_op(request):
 	return render(request, 'acesso/relatorio_op.html')
 
+@user_passes_test(lambda u: u.is_superuser)
 def modal(request):
 	return render(request, 'basemodal.html')
 
+@user_passes_test(lambda u: u.is_superuser)
 def modalt(request):
 	return render(request, 'baset.html')
 
@@ -98,6 +102,7 @@ def create_orientador(request):
 
 
 @login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 def update_orientador(request, pk):
 	orientador = Orientador.objects.get(pk=pk)
 	form = OrientadorForm(request.POST or None, instance = orientador)
@@ -109,12 +114,14 @@ def update_orientador(request, pk):
 
 
 @login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 def list_orientador(request):
 	orientadores = Orientador.objects.all()
 	return render(request, 'orientador/list_orientador.html',{'orientadores':orientadores})
 
 
 @login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 def delete_orientador(request, pk):
 	try:
 		orientador = Orientador.objects.get(pk=pk)
@@ -133,6 +140,7 @@ def home_bolsista(request):
 
 
 @login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 def create_bolsista(request):
 	form = BolsistaForm(request.POST or None)
 	form.fields['cartao_rfid'].widget.attrs['readonly'] = True
@@ -143,6 +151,7 @@ def create_bolsista(request):
 
 
 @login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 def update_bolsista(request, pk):
 	bolsista = Bolsista.objects.get(pk=pk)
 	form = BolsistaForm(request.POST or None, instance = bolsista)
@@ -153,12 +162,14 @@ def update_bolsista(request, pk):
 
 
 @login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 def list_bolsista(request):
 	bolsistas = Bolsista.objects.all()
 	return render(request, 'bolsista/list_bolsista.html',{'bolsistas':bolsistas})
 
 
 @login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 def delete_bolsista(request, pk):
 	try:
 		bolsista = Bolsista.objects.get(pk=pk)
@@ -265,6 +276,8 @@ def apb(request):
 	return render(request, 'acesso/relatorio.html',{'bolsistas':bolsistas})
 
 
+@login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 class RelatorioPeriodoB(View):
 	def get(self, request, data_ini, data_fim, pk):
 		if not pk == '0':
@@ -305,11 +318,14 @@ class RelatorioPeriodoB(View):
 		return response
 
 
+@login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 def list(request, data_ini, data_fim):
 	acessos = Acesso.objects.filter(data__range=(data_ini, data_fim))
 	return render(request,'acesso/list_ap.html',{'acessos':acessos})
 
-
+@login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 class RelatorioBolsista(View):
     def get(self, request, pk, **kwargs):
         bolsista = Bolsista.objects.get(pk=pk)
@@ -327,7 +343,9 @@ class RelatorioBolsista(View):
         response = HttpResponse(pdf, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename=Relatório %s.pdf'%(bolsista.nome)
         return response
-
+    
+@login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 class RelatorioPeriodo(View):
 	def get(self, request, data_ini, data_fim):
 		acessos = Acesso.objects.filter(data__range=(data_ini,data_fim))
@@ -354,6 +372,7 @@ class RelatorioPeriodo(View):
 
 
 @login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 def create_bolsista2(request):
 	path = "/dev/ttyACM0"
 	baudrate = 9600
@@ -387,13 +406,18 @@ def create_bolsista2(request):
 		con_serial.close()
 	
 @login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 def create_bolsista3(request):
 	return render(request, 'bolsista/cad_test.html', {})
 
+@login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 def t(request):
 	d = request.POST.get('nome')
 	return render(request, 'bolsista/cad_.html', {'d':d})
 
+@login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 def teste_ajax(request, id_):
 	idx = "Id recebido via AJAX: " + id_
 	message = "Apresente o Cartão RFID"
@@ -414,6 +438,8 @@ def teste_ajax(request, id_):
 #	}
 #	return HttpResponse(json.dumps(dx), content_type='application/json')
 
+@login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
 def teste_aja(request):
 	path = "/dev/ttyACM0"
 	baudrate = 9600
@@ -440,7 +466,7 @@ def teste_aja(request):
 	finally:
 		con_serial.close()
 
-
+@login_required(login_url='/login')
 def teste_aja2(request):
 	path = "/dev/ttyACM0"
 	baudrate = 9600

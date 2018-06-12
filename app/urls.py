@@ -20,10 +20,10 @@ urlpatterns = [
 	
 	#url(r'^teste/$', views.GeneratePdf.as_view(), name='GeneratePdf'),
 	
-	url(r'^acesso/relatorio_periodoB/(?P<data_ini>[\w.@+-]+)/(?P<data_fim>[\w.@+-]+)/(?P<pk>\d+)/$', views.RelatorioPeriodoB.as_view(), name='RelatorioPeriodoB'),
+	url(r'^acesso/relatorio_periodoB/(?P<data_ini>[\w.@+-]+)/(?P<data_fim>[\w.@+-]+)/(?P<pk>\d+)/$', views.RelatorioPeriodoB, name='RelatorioPeriodoB'),
 
-	url(r'^acesso/relatorio_bolsista/(?P<pk>\d+)$', views.RelatorioBolsista.as_view(), name='RelatorioBolsista'),
-	url(r'^acesso/relatorio_periodo/(?P<data_ini>[\w.@+-]+)/(?P<data_fim>[\w.@+-]+)/$', views.RelatorioPeriodo.as_view(), name='RelatorioPeriodo'),
+	url(r'^acesso/relatorio_bolsista/(?P<pk>\d+)$', views.RelatorioBolsista, name='RelatorioBolsista'),
+	url(r'^acesso/relatorio_periodo/(?P<data_ini>[\w.@+-]+)/(?P<data_fim>[\w.@+-]+)/$', views.RelatorioPeriodo, name='RelatorioPeriodo'),
 
 
 	url(r'^bolsista/$', views.list_bolsista, name='list_bolsista'),

@@ -50,8 +50,16 @@ footer {
   color: white;}
 
 
-input{
-    text-transform:uppercase;
+input#id_username {
+    text-transform:  none;
+}
+
+input#id_password1 {
+    text-transform:  none;
+}
+
+input#id_password2 {
+    text-transform: none;
 }
 
 ul.errorlist {
