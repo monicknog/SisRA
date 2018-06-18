@@ -19,14 +19,14 @@
 
 <body style="background: #373435;"">
 {%load bootstrap4%}
-
+<img class="col-md-6" style="vertical-align: center;align-items: center;" align="center" src="{%static 'img/img_leds.png'%}" alt="" width="250">
 <form method="post" class="form col-md-4">
 
  <div class="text-center mb-4">
-        <img class="mb-4" src="{%static 'img/img_leds.png'%}" alt="" width="300">
+        <img class="mb-4" src="{%static 'img/img_leds.png'%}" alt="" width="250">
 
 </div>
-   {%csrf_token%}
+    {%csrf_token%}
 {% load widget_tweaks %}
 
 {% for hidden_field in form.hidden_fields %}

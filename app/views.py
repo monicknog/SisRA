@@ -31,7 +31,7 @@ def registrar(request):
         
         if form.is_valid(): # se o formulario for valido
             form.save() # cria um novo usuario a partir dos dados enviados 
-            return redirect("/login/") # redireciona para a tela de login
+            return redirect("/") # redireciona para a tela de login
         else:
             # mostra novamente o formulario de cadastro com os erros do formulario atual
             return render(request, "registrar.html", {"form": form})
@@ -277,7 +277,7 @@ class RelatorioPeriodoB(View):
 		else:
 			bolsista = Bolsista.objects.all()
 			acessos = Acesso.objects.filter(data__range=(data_ini,data_fim)).exclude(hora_saida=None)
-			titulo = 'TODOS BOLSISTAS'
+			titulo = 'TODOS OS BOLSISTAS'
 			is_todos = '1'
 
 #		bolsistas = Bolsista.objects.get(pk=pk)
@@ -302,7 +302,7 @@ class RelatorioPeriodoB(View):
 		}
 		pdf = render_to_pdf('pdf/relatorio_periodo.html',data)
 		response = HttpResponse(pdf,content_type='application/pdf')
-		response['Content-Disposition'] = 'attachment; filename=RelatorioPeriodoBolsista.pdf'
+		response['Content-Disposition'] = 'attachment; filename=RELATORIO POR PERIODO.pdf'
 		return response
 
 
@@ -314,7 +314,7 @@ def list(request, data_ini, data_fim):
 class RelatorioBolsista(View):
     def get(self, request, pk, **kwargs):
         bolsista = Bolsista.objects.get(pk=pk)
-        acessos = Acesso.objects.filter(bolsista=bolsista,updated_at=data).exclude(hora_saida=None)
+        acessos = Acesso.objects.filter(bolsista=bolsista).exclude(hora_saida=None)
         if acessos.exists():
         	th = acessos.aggregate(total=Sum('total_horas'))
         else:
@@ -324,9 +324,9 @@ class RelatorioBolsista(View):
         	'acessos': acessos,
         	'th': th,
         }
-        pdf = render_to_pdf('pdf/invoice.html', data)
+        pdf = render_to_pdf('pdf/relatorio_bolsista.html', data)
         response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename=Relatório %s.pdf'%(bolsista.nome)
+        response['Content-Disposition'] = 'attachment; filename=RELATÓRIO %s.pdf'%(bolsista.nome)
         return response
 
 class RelatorioPeriodo(View):
@@ -348,7 +348,7 @@ class RelatorioPeriodo(View):
 		}
 		pdf = render_to_pdf('pdf/relatorio_periodo.html',data)
 		response = HttpResponse(pdf,content_type='application/pdf')
-		response['Content-Disposition'] = 'attachment; filename=RelatorioPeriodo.pdf'
+		response['Content-Disposition'] = 'attachment; filename=RELATORIO POR PERIODO.pdf'
 		return response
 
 
@@ -473,6 +473,7 @@ def teste_aja2(request):
 								data_saida = date.today()
 								acesso.total_horas = timedelta(hours = acesso.hora_saida.hour, minutes=acesso.hora_saida.minute, seconds=acesso.hora_saida.second, microseconds=1) - timedelta(hours = acesso.hora_entrada.hour, minutes=acesso.hora_entrada.minute, seconds=acesso.hora_entrada.second, microseconds=1)
 								acesso.save()
+								op='2'
 								message = "Saída registrada"
 								return HttpResponse(json.dumps({'message':message}), content_type='application/json')
 							else:
@@ -482,8 +483,9 @@ def teste_aja2(request):
 								novo_acesso.data = date.today()
 								novo_acesso.hora_entrada = timezone.localtime(timezone.now()).time()
 								novo_acesso.save()
+								op = '4'
 								message = "Data fora do ultimo registro da data de entrada, sendo assim, as horas não foram contadas e um novo acesso está sendo cadastrado. Não esqueça de apresentar o cartão na saída do laboratorio"
-								return HttpResponse(json.dumps({'message':message}), content_type='application/json')
+								return HttpResponse(json.dumps({'message':message,'op':op}), content_type='application/json')
 
 
 						else:
@@ -493,18 +495,21 @@ def teste_aja2(request):
 							novo_acesso.hora_entrada = timezone.localtime(timezone.now()).time()
 							novo_acesso.save()
 							message = "Entrada Registrada"
-							return HttpResponse(json.dumps({'message':message}), content_type='application/json')
+							op = '1'
+							return HttpResponse(json.dumps({'message':message,'op':op}), content_type='application/json')
 					else:
 						novo_acesso = Acesso()
 						novo_acesso.bolsista =  bolsista
 						novo_acesso.data = date.today()
 						novo_acesso.hora_entrada = timezone.localtime(timezone.now()).time()
 						novo_acesso.save()
+						op = '1'
 						message = "Entrada Registrada"
-						return HttpResponse(json.dumps({'message':message}), content_type='application/json')
+						return HttpResponse(json.dumps({'message':message,'op':op}), content_type='application/json')
 				except Bolsista.DoesNotExist:
+					op = '3'
 					message = "Cartão não está relacionado a nenhum bolsista"
-					return HttpResponse(json.dumps({'message':message, 'key_value':key_value}), content_type='application/json')
+					return HttpResponse(json.dumps({'message':message,'op':op, 'key_value':key_value}), content_type='application/json')
 		#return render(request, 'teste.html', {'key_value':key_value})
 	except serial.SerialException as e:
 		return render(request, 'teste.html', {'key_value':e})

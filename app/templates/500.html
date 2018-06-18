@@ -1,8 +1,25 @@
-{% extends "base.html" %}
-
+<!doctype html>
 {%load static%}
+<html lang="en">
 
-{% block content %}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{%static 'img/ICOLEADS.png'%}">
+    <title>PROJETO LEDS</title>
+    <link href="{% static 'css/bootstrap/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet"> 
+  </head>
+  <body id="body">
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="{%url 'app:home'%}">LEDS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </nav>
+    <div class="container-fluid">
 
 <div align="center" style="align-items: center;">
 	<img src="{% static 'img/warning.png'%}">
@@ -12,5 +29,5 @@
 	</button></a>
 </div>   
 
-
-{% endblock %}
+</div></div></body>
+</html>

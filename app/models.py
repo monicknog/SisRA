@@ -6,7 +6,8 @@ from django.conf import settings
 from django.core import validators
 
 class Orientador(models.Model):
-	nome = models.CharField('Nome', max_length=100, unique = True)
+	nome = models.CharField('Nome', max_length=100, unique = True, validators=[validators.RegexValidator(re.compile('^[A-Z,´,Á-Ú]+$'),
+            'O nome só pode conter letras', 'invalid')])
 
 	def __str__(self):
 		return self.nome
@@ -23,15 +24,16 @@ class Orientador(models.Model):
 class Bolsista(models.Model):
 
 	TIPO_CHOICES = (
-	    (0, 'Voluntário'),
-	    (1, 'Remunerado'),
+	    (0, 'VOLUNTÁRIO'),
+	    (1, 'REMUNERADO'),
 	)
 
 
-	nome = models.CharField('Nome', max_length=100)
+	nome = models.CharField('Nome', max_length=100, validators=[validators.RegexValidator(re.compile('^[A-Z,´,Á-Ú]+$'),
+            'O nome só pode conter letras', 'invalid')])
 	matricula = models.CharField('Matricula',max_length= 14,unique=True, validators=[MinLengthValidator(14),validators.RegexValidator(re.compile('^[\d]+$'),
             'A matrícula só pode conter números', 'invalid')])
-	cartao_rfid = models.CharField('Cartão RFID', max_length=100, null=True)
+	cartao_rfid = models.CharField('Cartão RFID', max_length=100, null=True, unique=True)
 	orientador = models.ForeignKey(Orientador, verbose_name='Orientador', related_name='bolsista_professor', on_delete=models.CASCADE, default=True)
 	tipo_bolsa = models.IntegerField('Tipo', choices=TIPO_CHOICES)
 	carga_horaria_semanal = models.IntegerField('Carga Horaria (semanal)', validators=[MinValueValidator(1)])

@@ -15,8 +15,8 @@
     {%csrf_token%}
 
 <h2>Deseja realmente excluir {{bolsista.nome}} ?</h2>
-<button type="submit" class="btn btn-success">Confirmar</button>
-<a href="{%url 'app:list_bolsista'%}" class="btn btn-danger cancel-link">Cancelar</a>
+<button type="submit" class="btn btn-success btn-sm">Confirmar</button>
+<a href="{%url 'app:list_bolsista'%}" class="btn btn-danger cancel-link btn-sm">Cancelar</a>
     </div>
 </form>
 {% endblock %}

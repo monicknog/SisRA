@@ -1,7 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
  <html>
+ {%load static%}
      <head>
          <title>Relatório</title>
+         <link href="{% static 'css/bootstrap/bootstrap.min.css'%}" rel="stylesheet">
          <style type="text/css">
              body {
                  font-weight: 200;
@@ -38,6 +40,7 @@
              }
              th{
                 text-align: center;
+
              }
              tbody{
                 text-align: center;
@@ -48,6 +51,7 @@
              }
          </style>
      </head>
+
      <body>
          <div class='wrapper'>
          {%if acessos.exists%}
@@ -56,33 +60,34 @@
                  <span>{{titulo}} DE {{data_inicio}} À {{data_fim}}</span>
              </div>
          <div>
-        <table class="table">
+        {%if acessos.exists%}
+        <table border=0.5 cellspacing=3 cellpadding=3 bordercolor="666633" class="table">
         <thead>
-        <tr>
+        <tr style="background-color: gray;">
             {%if is_todos == '1'%}
-            <th>Bolsista</th>
+            <th valign="middle">BOLSISTA</th>
             {%endif%}
-            <th>Data</th>
-            <th>Entrada</th>
-            <th>Saída</th>
-            <th>Permanência</th>
+            <th valign="middle">DATA</th>
+            <th valign="middle">ENTRADA</th>
+            <th valign="middle">SAÍDA</th>
+            <th valign="middle">PERMANENCIA</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody valign="middle">
         {% for acesso in acessos %}
             <tr>
                 {%if is_todos == '1'%}
-                <td>{{acesso.bolsista}}</td>
+                <td valign="middle" style="text-align: left;">{{acesso.bolsista}}</td>
                 {%endif%}
-                <td>{{acesso.data}}</td>
-                <td>{{ acesso.hora_entrada}}</td>
-                <td>{{ acesso.hora_saida }}</td>
-                <td>{{ acesso.total_horas}}</td>
+                <td valign="middle">{{acesso.data}}</td>
+                <td valign="middle">{{ acesso.hora_entrada}}</td>
+                <td valign="middle">{{ acesso.hora_saida }}</td>
+                <td valign="middle">{{ acesso.total_horas}}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <h2>Total {{ th.total }}</h2>
+    <h2>TOTAL {{ th.total }}</h2>
     </div>
      {%else%}
      <p class='title'>NÃO HÁ REGISTRO DE {{titulo}} DE {{data_inicio}} À {{data_fim}}</p>

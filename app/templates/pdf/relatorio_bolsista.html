@@ -58,13 +58,13 @@
       
          <div class='wrapper'>
          <img src="{%static 'img/img_leds.png'%}">
-        {%if acessos.exists%}
+        
              <div class='header'>
                  <p class='title'>RELATÓRIO {{bolsista.nome}}</p>
              </div>
          <div>
-        
-        <table class="table">
+        {%if acessos.exists%}
+        <table border=0.5 cellspacing=3 cellpadding=3 bordercolor="666633" class="table">
         <thead>
         <tr>
             <th>DATA</th>
@@ -77,6 +77,7 @@
         {% for acesso in acessos %}
             <tr>
                 <td>{{acesso.data}}</td>
+
                 <td>{{ acesso.hora_entrada}}</td>
                 <td>{{ acesso.hora_saida }}</td>
                 <td>{{ acesso.total_horas}}</td>
@@ -84,7 +85,7 @@
         {% endfor %}
         </tbody>
     </table>
-    <h2 class="total">Total {{ th.total }}</h2>
+    <h2 class="total">TOTAL {{ th.total }}</h2>
     {%else%}
     <div class="" style="text-align: center;">
                  <h2>NÃO HÁ REGISTROS PARA {{bolsista.nome}}</h2>

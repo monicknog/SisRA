@@ -62,6 +62,10 @@ ul.errorlist {
   color: blueviolet;
 }
 
-#rf:houver{
-  background-color: gray;
+#rf:hover {
+    color: blue;
+}
+
+p#rf:hover {
+    color: blue;
 }
